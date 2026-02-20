@@ -657,6 +657,9 @@ footer {
   body { cursor:auto; }
   .hamburger { display:flex !important; }
   .nav-links { display:none !important; }
+
+  /* Music player mobile */
+  .music-player { bottom:1rem; right:1rem; }
 }
 
 /* ── PROGRESS BAR ── */
@@ -734,6 +737,206 @@ footer {
   transition:color .2s, background .2s;
 }
 .mobile-menu a:active, .mobile-menu a:hover { color:var(--coral); background:rgba(232,133,106,.05); }
+
+/* ══════════════════════════════════
+   🎵 MUSIC PLAYER — notebook style
+══════════════════════════════════ */
+.music-player {
+  position: fixed;
+  bottom: 1.8rem;
+  right: 2rem;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .5rem;
+  cursor: none;
+}
+
+/* Tape strip on top of player card */
+.mp-card {
+  background: var(--paper);
+  border: 1.5px solid rgba(44,31,20,.1);
+  box-shadow: 3px 5px 20px rgba(44,31,20,.14);
+  padding: .7rem 1rem .8rem;
+  min-width: 200px;
+  transform: rotate(.6deg);
+  position: relative;
+  transition: transform .3s, box-shadow .3s;
+}
+.mp-card:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 5px 8px 28px rgba(44,31,20,.18);
+}
+.mp-tape {
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 60px; height: 18px;
+  background: rgba(245,200,66,.65);
+  border-radius: 2px;
+}
+
+/* Song name */
+.mp-song {
+  font-family: 'Caveat', cursive;
+  font-size: .95rem;
+  color: var(--ink-mid);
+  text-align: center;
+  margin-bottom: .55rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+/* Controls row */
+.mp-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+}
+
+.mp-btn {
+  background: none;
+  border: none;
+  cursor: none;
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: .2rem;
+  border-radius: 50%;
+  transition: transform .15s, background .15s;
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+}
+.mp-btn:hover { background: rgba(232,133,106,.12); transform: scale(1.15); }
+
+/* Play/pause big */
+.mp-btn.play-btn {
+  width: 38px; height: 38px;
+  background: var(--coral);
+  font-size: 1rem;
+  box-shadow: 2px 3px 10px rgba(232,133,106,.35);
+}
+.mp-btn.play-btn:hover {
+  background: #d4704f;
+  transform: scale(1.12);
+}
+
+/* Progress bar */
+.mp-progress-wrap {
+  width: 100%;
+  height: 4px;
+  background: rgba(44,31,20,.1);
+  border-radius: 99px;
+  margin-top: .5rem;
+  overflow: hidden;
+}
+.mp-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--coral), var(--sun));
+  border-radius: 99px;
+  transition: width .5s linear;
+}
+
+/* Volume row */
+.mp-vol-row {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: .45rem;
+}
+.mp-vol-icon { font-size: .85rem; }
+.mp-vol {
+  -webkit-appearance: none;
+  width: 90px; height: 3px;
+  background: rgba(44,31,20,.15);
+  border-radius: 99px; outline: none; cursor: pointer;
+}
+.mp-vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  background: var(--coral);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(232,133,106,.5);
+}
+
+/* Track dots */
+.mp-dots {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: .4rem;
+}
+.mp-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(44,31,20,.15);
+  transition: background .3s, transform .3s;
+}
+.mp-dot.active {
+  background: var(--coral);
+  transform: scale(1.3);
+}
+
+/* Note dancing animation */
+.mp-note {
+  position: absolute;
+  font-size: 1rem;
+  pointer-events: none;
+  animation: noteFloat 2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes noteFloat {
+  0%   { opacity:.8; transform: translateY(0) rotate(-5deg); }
+  100% { opacity:0;  transform: translateY(-40px) rotate(10deg); }
+}
+
+/* Toggle button (show/hide player) */
+.mp-toggle {
+  background: var(--coral);
+  border: none;
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  font-size: 1.3rem;
+  display: flex; align-items:center; justify-content:center;
+  cursor: none;
+  box-shadow: 2px 4px 14px rgba(232,133,106,.4);
+  transition: transform .2s, box-shadow .2s;
+  align-self: flex-end;
+}
+.mp-toggle:hover {
+  transform: scale(1.1) rotate(-5deg);
+  box-shadow: 3px 6px 20px rgba(232,133,106,.5);
+}
+
+/* Waveform bars (playing indicator) */
+.mp-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.mp-wave span {
+  display: block;
+  width: 3px;
+  background: var(--coral);
+  border-radius: 2px;
+  animation: waveBar 1s ease-in-out infinite;
+}
+.mp-wave span:nth-child(1) { height: 8px;  animation-delay: 0s; }
+.mp-wave span:nth-child(2) { height: 14px; animation-delay: .15s; }
+.mp-wave span:nth-child(3) { height: 10px; animation-delay: .3s; }
+.mp-wave span:nth-child(4) { height: 14px; animation-delay: .1s; }
+.mp-wave span:nth-child(5) { height: 6px;  animation-delay: .25s; }
+.mp-wave.paused span { animation-play-state: paused; }
+
+@keyframes waveBar {
+  0%,100% { transform: scaleY(1); }
+  50%      { transform: scaleY(.3); }
+}
 </style>
 </head>
 <body>
@@ -754,6 +957,60 @@ footer {
   <div class="c-tip"></div>
   <div class="c-trail"></div>
 </div>
+
+<!-- ════════════════════════════
+     🎵 MUSIC PLAYER WIDGET
+════════════════════════════ -->
+<div class="music-player" id="musicPlayer">
+  <!-- Card (hidden by default, toggle shows it) -->
+  <div class="mp-card" id="mpCard" style="display:none">
+    <div class="mp-tape"></div>
+
+    <!-- Waveform + song name row -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.3rem">
+      <div class="mp-wave" id="mpWave">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="mp-song" id="mpSong">Nhạc kỉ niệm 🎵</div>
+    </div>
+
+    <!-- Controls -->
+    <div class="mp-controls">
+      <button class="mp-btn" id="mpPrev" title="Bài trước">⏮</button>
+      <button class="mp-btn play-btn" id="mpPlay" title="Phát / Tạm dừng">▶️</button>
+      <button class="mp-btn" id="mpNext" title="Bài tiếp">⏭</button>
+    </div>
+
+    <!-- Progress -->
+    <div class="mp-progress-wrap">
+      <div class="mp-progress-fill" id="mpFill"></div>
+    </div>
+
+    <!-- Volume -->
+    <div class="mp-vol-row">
+      <span class="mp-vol-icon">🔈</span>
+      <input type="range" class="mp-vol" id="mpVol" min="0" max="1" step="0.05" value="0.6">
+      <span class="mp-vol-icon">🔊</span>
+    </div>
+
+    <!-- Track dots -->
+    <div class="mp-dots">
+      <div class="mp-dot active" data-idx="0"></div>
+      <div class="mp-dot" data-idx="1"></div>
+    </div>
+  </div>
+
+  <!-- Toggle button (always visible) -->
+  <button class="mp-toggle" id="mpToggle" title="Nhạc nền 🎵">🎵</button>
+</div>
+
+<!-- Audio elements -->
+<audio id="audio1" preload="auto" loop="false">
+  <source src="1.mp3" type="audio/mpeg">
+</audio>
+<audio id="audio2" preload="auto" loop="false">
+  <source src="2.mp3" type="audio/mpeg">
+</audio>
 
 <!-- Nav -->
 <nav>
@@ -1183,6 +1440,165 @@ document.addEventListener('click', e=>{
     closeMobileMenu();
   }
 });
+
+/* ════════════════════════════════════════
+   🎵 MUSIC PLAYER LOGIC
+════════════════════════════════════════ */
+(function(){
+  const tracks = [
+    { audio: document.getElementById('audio1'), name: '🎵 Nhạc kỉ niệm 1' },
+    { audio: document.getElementById('audio2'), name: '🎵 Nhạc kỉ niệm 2' },
+  ];
+
+  let current = 0;
+  let playing = false;
+
+  const mpToggle   = document.getElementById('mpToggle');
+  const mpCard     = document.getElementById('mpCard');
+  const mpPlay     = document.getElementById('mpPlay');
+  const mpPrev     = document.getElementById('mpPrev');
+  const mpNext     = document.getElementById('mpNext');
+  const mpSong     = document.getElementById('mpSong');
+  const mpFill     = document.getElementById('mpFill');
+  const mpVol      = document.getElementById('mpVol');
+  const mpWave     = document.getElementById('mpWave');
+  const mpDots     = document.querySelectorAll('.mp-dot');
+  const mpPlayer   = document.getElementById('musicPlayer');
+
+  let cardVisible = true;
+  let hasInteracted = false;
+
+  // ── Hiện card ngay từ đầu ──
+  mpCard.style.display = 'block';
+
+  // ── Tự phát nhạc ngay khi trang load (thử trước) ──
+  window.addEventListener('load', ()=>{
+    currentAudio().play().then(()=>{
+      playing = true;
+      hasInteracted = true;
+      updateUI();
+      spawnNote();
+    }).catch(()=>{
+      // Trình duyệt chặn autoplay → đợi lần click đầu tiên
+      updateUI();
+    });
+  });
+
+  // ── Nếu autoplay bị chặn → phát khi người dùng click lần đầu bất kỳ đâu ──
+  function onFirstInteract(){
+    if(hasInteracted) return;
+    hasInteracted = true;
+    document.removeEventListener('click', onFirstInteract);
+    document.removeEventListener('touchstart', onFirstInteract);
+    if(!playing){
+      currentAudio().play().then(()=>{ playing=true; updateUI(); spawnNote(); }).catch(()=>{});
+    }
+  }
+  document.addEventListener('click', onFirstInteract);
+  document.addEventListener('touchstart', onFirstInteract);
+
+  // ── Show / hide card ──
+  mpToggle.addEventListener('click', (e)=>{
+    e.stopPropagation(); // không trigger onFirstInteract 2 lần
+    cardVisible = !cardVisible;
+    mpCard.style.display = cardVisible ? 'block' : 'none';
+  });
+
+  // ── Helpers ──
+  function currentAudio(){ return tracks[current].audio; }
+
+  function updateUI(){
+    mpSong.textContent = tracks[current].name;
+    mpPlay.textContent = playing ? '⏸' : '▶️';
+    mpWave.classList.toggle('paused', !playing);
+    mpDots.forEach((d,i)=>{
+      d.classList.toggle('active', i===current);
+    });
+    // set volume
+    tracks.forEach(t=>{ t.audio.volume = parseFloat(mpVol.value); });
+  }
+
+  function startPlay(){
+    currentAudio().currentTime = 0;
+    currentAudio().play().then(()=>{
+      playing = true;
+      updateUI();
+      spawnNote();
+    }).catch(()=>{});
+  }
+
+  function stopAll(){
+    tracks.forEach(t=>{ t.audio.pause(); t.audio.currentTime=0; });
+  }
+
+  function switchTo(idx){
+    stopAll();
+    current = idx;
+    if(playing) startPlay();
+    else updateUI();
+  }
+
+  // ── Play / Pause ──
+  mpPlay.addEventListener('click', ()=>{
+    if(playing){
+      currentAudio().pause();
+      playing = false;
+      updateUI();
+    } else {
+      currentAudio().play().then(()=>{ playing=true; updateUI(); spawnNote(); }).catch(()=>{});
+    }
+  });
+
+  // ── Prev / Next ──
+  mpPrev.addEventListener('click', ()=>{
+    switchTo((current - 1 + tracks.length) % tracks.length);
+  });
+  mpNext.addEventListener('click', ()=>{
+    switchTo((current + 1) % tracks.length);
+  });
+
+  // ── Track dot click ──
+  mpDots.forEach((d,i)=>{
+    d.addEventListener('click', ()=>{ if(i!==current) switchTo(i); });
+  });
+
+  // ── When a track ends → play next (loop playlist) ──
+  tracks.forEach((t, i)=>{
+    t.audio.addEventListener('ended', ()=>{
+      current = (i + 1) % tracks.length;
+      startPlay();
+    });
+    t.audio.addEventListener('timeupdate', ()=>{
+      if(i===current && t.audio.duration){
+        mpFill.style.width = (t.audio.currentTime / t.audio.duration * 100) + '%';
+      }
+    });
+  });
+
+  // ── Volume ──
+  mpVol.addEventListener('input', ()=>{
+    tracks.forEach(t=>{ t.audio.volume = parseFloat(mpVol.value); });
+  });
+  // init volume
+  tracks.forEach(t=>{ t.audio.volume = parseFloat(mpVol.value); });
+
+  // ── Floating note effect ──
+  function spawnNote(){
+    if(!playing) return;
+    const notes = ['🎵','🎶','♪','♫','🎼'];
+    const n = document.createElement('span');
+    n.className = 'mp-note';
+    n.textContent = notes[Math.floor(Math.random()*notes.length)];
+    n.style.left  = (20 + Math.random()*60) + '%';
+    n.style.bottom = '110%';
+    mpPlayer.style.position = 'fixed'; // ensure parent is positioned
+    mpCard.appendChild(n);
+    setTimeout(()=>n.remove(), 2000);
+    if(playing) setTimeout(spawnNote, 3000 + Math.random()*2000);
+  }
+
+  updateUI();
+})();
 </script>
 </body>
 </html>
