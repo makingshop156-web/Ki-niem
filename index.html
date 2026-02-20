@@ -796,7 +796,7 @@ footer {
     <div class="hero-tape-top"></div>
     <div class="hero-tape-left"></div>
 
-    <p class="hero-eyebrow">📓 &nbsp;Năm học 2024 — 2025</p>
+    <p class="hero-eyebrow">📓 &nbsp;Năm học 2025 — 2026</p>
     <h1 class="hero-title">
       <span class="accent">Khép Lại</span><br>
       Một <span class="accent2">Chương</span> Thật Đẹp
@@ -840,7 +840,7 @@ footer {
       <div class="cd-card reveal"><span class="cd-num" id="cd-m">00</span><span class="cd-label">Phút</span></div>
       <div class="cd-card reveal"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Giây</span></div>
     </div>
-    <p class="cd-from reveal">📅 Tính từ lễ bế giảng năm học 2024–2025</p>
+    <p class="cd-from reveal">📅 Tính từ lễ bế giảng năm học 2025–2026</p>
   </div>
 </section>
 
@@ -1040,7 +1040,7 @@ footer {
 <!-- Footer -->
 <footer>
   <span class="footer-doodle">Cấp 2 — Mãi Mãi Trong Tim ✏️</span>
-  <p class="footer-text">Lớp 9 &nbsp;·&nbsp; 2024 – 2025 &nbsp;·&nbsp; Chúng ta đã có một tuổi thơ thật đẹp</p>
+  <p class="footer-text">Lớp 9 &nbsp;·&nbsp; 2025 – 2026 &nbsp;·&nbsp; Chúng ta đã có một tuổi thơ thật đẹp</p>
   <span class="footer-hearts">🌻 ⭐ 💛 ⭐ 🌻</span>
 </footer>
 
@@ -1063,7 +1063,7 @@ document.querySelectorAll('a,.polaroid,.cd-card,.tl-body,button').forEach(el => 
 });
 
 /* ── COUNTDOWN from graduation day ── */
-const gradDay = new Date('2025-05-31T08:00:00');
+const gradDay = new Date('2026-05-31T08:00:00');
 const els = { d:document.getElementById('cd-d'), h:document.getElementById('cd-h'), m:document.getElementById('cd-m'), s:document.getElementById('cd-s') };
 function pad(n,l=2){ return String(Math.abs(n)).padStart(l,'0'); }
 function tick(){
@@ -1075,7 +1075,7 @@ function tick(){
   const m = Math.floor((abs%3600000)/60000);
   const s = Math.floor((abs%60000)/1000);
   const doc = document.querySelector('.cd-from');
-  if(doc) doc.textContent = future ? '⏳ Đếm ngược đến lễ bế giảng năm học 2024–2025' : '📅 Đã trôi qua kể từ ngày bế giảng';
+  if(doc) doc.textContent = future ? '⏳ Đếm ngược đến lễ bế giảng năm học 2025 - 2026' : '📅 Đã trôi qua kể từ ngày bế giảng';
   const set = (el,v)=>{
     if(el.textContent!==v){ el.textContent=v; el.classList.add('tick'); setTimeout(()=>el.classList.remove('tick'),200); }
   };
@@ -1185,5 +1185,4 @@ document.addEventListener('click', e=>{
 });
 </script>
 </body>
-
 </html>
