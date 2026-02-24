@@ -4,947 +4,295 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Năm Cuối Cấp 2 — Khép Lại Một Chương 📓</title>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&family=Gochi+Hand&family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Gochi+Hand&family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
 <style>
-:root {
-  --sky: #a8d8ea;
-  --sky-deep: #6db4d4;
-  --sun: #f5c842;
-  --sun-soft: #f7db7a;
-  --coral: #e8856a;
-  --coral-soft: #f2b39e;
-  --sage: #8fbc8f;
-  --sage-soft: #b8d8b8;
-  --paper: #fef9f0;
-  --paper-warm: #fdf0d5;
-  --ink: #2c1f14;
-  --ink-mid: #4a3728;
-  --tape: rgba(168,216,234,.45);
-  --tape-y: rgba(245,200,66,.4);
-  --muted: #9b8a78;
-  --line: rgba(44,31,20,.08);
+:root{
+  --sky:#a8d8ea;--sky-deep:#6db4d4;--sun:#f5c842;--coral:#e8856a;
+  --sage:#8fbc8f;--paper:#fef9f0;--paper-warm:#fdf0d5;
+  --ink:#2c1f14;--ink-mid:#4a3728;--muted:#9b8a78
 }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#e8f4f8;color:var(--ink);font-family:'Newsreader',serif;overflow-x:hidden;cursor:none}
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+/* CURSOR */
+.cursor{position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
+.c-tip{width:12px;height:12px;background:var(--coral);border-radius:50% 50% 50% 0;transform:translate(-2px,-2px) rotate(-45deg);position:absolute;box-shadow:0 2px 8px rgba(232,133,106,.4)}
+.c-trail{position:absolute;left:-16px;top:-16px;width:32px;height:32px;border:1.5px solid rgba(232,133,106,.35);border-radius:50%;transition:all .18s ease}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 27px,rgba(168,216,234,.15) 27px,rgba(168,216,234,.15) 28px)}
 
-body {
-  background: #e8f4f8;
-  color: var(--ink);
-  font-family: 'Newsreader', serif;
-  overflow-x: hidden;
-  cursor: none;
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(254,249,240,.9);backdrop-filter:blur(8px);border-bottom:1.5px solid rgba(168,216,234,.4)}
+.nav-logo{font-family:'Caveat',cursive;font-size:1.3rem;font-weight:700;color:var(--coral);display:flex;align-items:center;gap:.4rem}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{font-family:'Caveat',cursive;font-size:.95rem;font-weight:500;color:var(--ink-mid);text-decoration:none;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--coral);transform:scaleX(0);transition:transform .2s;transform-origin:left}
+.nav-links a:hover{color:var(--coral)}.nav-links a:hover::after{transform:scaleX(1)}
 
-/* ── CURSOR (pencil style) ── */
-.cursor { position:fixed; top:0; left:0; pointer-events:none; z-index:9999; }
-.c-tip {
-  width:12px; height:12px;
-  background: var(--coral);
-  border-radius:50% 50% 50% 0;
-  transform: translate(-2px,-2px) rotate(-45deg);
-  position:absolute;
-  box-shadow:0 2px 8px rgba(232,133,106,.4);
-  transition: transform .1s;
-}
-.c-trail {
-  position:absolute; left:-16px; top:-16px;
-  width:32px; height:32px;
-  border:1.5px solid rgba(232,133,106,.35);
-  border-radius:50%;
-  transition: all .18s ease;
-}
+/* HERO */
+.hero{min-height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem 4rem;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(180deg,#c8e8f5 0%,#dff2fa 25%,#f5f0e8 65%,#fde8d0 100%)}
+.cloud{position:absolute;border-radius:50px;background:rgba(255,255,255,.7);filter:blur(1px)}
+.cloud-1{width:140px;height:45px;top:15%;left:8%;animation:drift1 18s ease-in-out infinite}
+.cloud-2{width:90px;height:30px;top:22%;right:15%;animation:drift2 22s ease-in-out infinite}
+.cloud-3{width:110px;height:38px;top:10%;left:40%;animation:drift1 25s ease-in-out infinite 3s}
+.cloud::before,.cloud::after{content:'';position:absolute;background:rgba(255,255,255,.8);border-radius:50%}
+.cloud::before{width:55%;height:160%;top:-40%;left:20%}.cloud::after{width:40%;height:140%;top:-30%;right:15%}
+@keyframes drift1{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+@keyframes drift2{0%,100%{transform:translateX(0)}50%{transform:translateX(-12px)}}
+.sticker{position:absolute;z-index:3;font-size:2.2rem;filter:drop-shadow(2px 3px 4px rgba(44,31,20,.15));animation:floatSticker 4s ease-in-out infinite}
+@keyframes floatSticker{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-8px) rotate(calc(var(--rot,0deg) + 3deg))}}
+.hero-card{position:relative;z-index:2;background:var(--paper);padding:3rem 4rem 3.5rem;box-shadow:4px 6px 30px rgba(44,31,20,.12);transform:rotate(-.4deg);max-width:700px;width:100%;border:1px solid rgba(44,31,20,.07)}
+.hero-card::before{content:'';position:absolute;bottom:0;right:0;border-style:solid;border-width:0 0 28px 28px;border-color:transparent transparent #e8dcc8 transparent}
+.hero-card::after{content:'';position:absolute;left:52px;top:0;bottom:0;width:1px;background:rgba(232,133,106,.25)}
+.hero-tape-top{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-.8deg);width:90px;height:26px;background:rgba(245,200,66,.55);border-radius:2px}
+.hero-tape-left{position:absolute;top:30px;left:-12px;transform:rotate(92deg);width:55px;height:18px;background:rgba(168,216,234,.55);border-radius:2px}
+.hero-eyebrow{font-family:'Caveat',cursive;font-size:1rem;color:var(--muted);letter-spacing:.08em;margin-bottom:.6rem;opacity:0;animation:slideUp .7s ease forwards .2s}
+.hero-title{font-family:'Gochi Hand',cursive;font-size:clamp(2.6rem,7vw,5.2rem);line-height:1.05;color:var(--ink);opacity:0;animation:slideUp .9s ease forwards .4s}
+.hero-title .accent{color:var(--coral)}.hero-title .accent2{color:var(--sky-deep)}
+.hero-year-tag{display:inline-block;margin-top:.9rem;background:var(--sun);color:var(--ink);padding:.25rem 1.2rem;font-family:'Caveat',cursive;font-size:1.15rem;font-weight:700;transform:rotate(.8deg);box-shadow:2px 2px 0 rgba(44,31,20,.15);opacity:0;animation:slideUp .7s ease forwards .6s}
+.hero-sub{margin-top:1.2rem;font-style:italic;font-size:1.05rem;line-height:1.8;color:var(--ink-mid);opacity:0;animation:slideUp .7s ease forwards .8s}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:3;opacity:0;animation:slideUp .7s ease forwards 1.4s}
+.scroll-pen{font-size:1.5rem;animation:bounce 1.5s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.scroll-label{font-family:'Caveat',cursive;font-size:.85rem;color:var(--muted)}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── BG TEXTURE — notebook lines ── */
-body::before {
-  content:'';
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px, transparent 27px,
-      rgba(168,216,234,.15) 27px, rgba(168,216,234,.15) 28px
-    );
-}
+/* SECTIONS */
+section{position:relative;z-index:1}
+.section-wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.section-heading{display:flex;flex-direction:column;gap:.4rem;margin-bottom:3rem}
+.sh-eyebrow{font-family:'Caveat',cursive;font-size:1rem;color:var(--muted);letter-spacing:.06em}
+.sh-title{font-family:'Gochi Hand',cursive;font-size:clamp(2rem,5vw,3rem);line-height:1.1;color:var(--ink)}
+.sh-squiggle{width:60px;height:8px;margin-top:.2rem;background:var(--coral);border-radius:4px;position:relative;overflow:hidden}
+.sh-squiggle::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shimmer 2s linear infinite}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(200%)}}
 
-/* ── NAV ── */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  padding:1rem 2.5rem;
-  display:flex; justify-content:space-between; align-items:center;
-  background:rgba(254,249,240,.9); backdrop-filter:blur(8px);
-  border-bottom:1.5px solid rgba(168,216,234,.4);
-}
-.nav-logo {
-  font-family:'Caveat', cursive; font-size:1.3rem; font-weight:700;
-  color:var(--coral);
-  display:flex; align-items:center; gap:.4rem;
-}
-.nav-links { display:flex; gap:2rem; list-style:none; }
-.nav-links a {
-  font-family:'Caveat', cursive; font-size:1rem; font-weight:500;
-  color:var(--ink-mid); text-decoration:none; letter-spacing:.03em;
-  transition:color .2s; position:relative;
-}
-.nav-links a::after {
-  content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px;
-  background:var(--coral); transform:scaleX(0); transition:transform .2s; transform-origin:left;
-}
-.nav-links a:hover { color:var(--coral); }
-.nav-links a:hover::after { transform:scaleX(1); }
+/* MARQUEE */
+.marquee-bar{overflow:hidden;padding:8px 0;background:var(--coral);position:relative;z-index:1}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 18s linear infinite}
+.marquee-item{display:inline-flex;align-items:center;gap:1rem;padding:0 1.5rem;font-family:'Caveat',cursive;font-size:1.05rem;color:rgba(255,255,255,.85);font-weight:600}
+.mq-dot{width:5px;height:5px;background:rgba(255,255,255,.5);border-radius:50%}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── TAPE STRIP (reusable) ── */
-.tape-h {
-  display:inline-block;
-  background:var(--tape);
-  padding:.1rem .8rem; transform:rotate(-1deg);
-  font-family:'Caveat', cursive; font-size:.9rem;
-  color:var(--ink-mid); border-radius:1px;
-}
-.tape-y { background:var(--tape-y); transform:rotate(1.2deg); }
+/* COUNTDOWN */
+.countdown-section{padding:5rem 0;background:linear-gradient(180deg,#f5f0e8,var(--paper-warm));position:relative;overflow:hidden}
+.countdown-section::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 27px,rgba(168,216,234,.12) 27px,rgba(168,216,234,.12) 28px)}
+.cd-inner{max-width:860px;margin:0 auto;padding:0 2rem;text-align:center}
+.cd-note{font-style:italic;font-size:1rem;color:var(--muted);margin-bottom:2.5rem;line-height:1.7}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:1.5rem}
+.cd-card{background:var(--paper);border:1.5px solid rgba(44,31,20,.08);padding:2rem .8rem;box-shadow:3px 4px 16px rgba(44,31,20,.08);position:relative;transition:transform .3s}
+.cd-card:hover{transform:translateY(-4px) rotate(.5deg)}
+.cd-card::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:40px;height:16px;border-radius:2px}
+.cd-card:nth-child(1)::before{background:rgba(168,216,234,.6)}.cd-card:nth-child(2)::before{background:rgba(245,200,66,.6)}.cd-card:nth-child(3)::before{background:rgba(232,133,106,.5)}.cd-card:nth-child(4)::before{background:rgba(143,188,143,.6)}
+.cd-num{font-family:'Caveat',cursive;font-size:clamp(3rem,7vw,4.5rem);font-weight:700;color:var(--coral);display:block;line-height:1;transition:transform .15s}
+.cd-num.tick{transform:scale(1.08);color:var(--sky-deep)}
+.cd-label{font-family:'Josefin Sans',sans-serif;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;display:block}
+.cd-from{font-family:'Caveat',cursive;font-size:.95rem;color:var(--muted);margin-top:1rem}
 
-/* ── HERO ── */
-.hero {
-  min-height:100vh; position:relative; z-index:1;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  text-align:center; padding:6rem 2rem 4rem;
-  overflow:hidden;
-}
+/* TIMELINE */
+.timeline-section{padding:5rem 0;background:var(--paper)}
+.tl-list{margin-top:3rem;position:relative;padding-left:2rem}
+.tl-list::before{content:'';position:absolute;left:60px;top:0;bottom:0;width:1.5px;background:rgba(232,133,106,.3)}
+.tl-row{display:grid;grid-template-columns:60px auto 1fr;gap:0 1.5rem;margin-bottom:2.8rem;align-items:start;opacity:0;transform:translateX(-20px);transition:opacity .7s ease,transform .7s ease}
+.tl-row.visible{opacity:1;transform:translateX(0)}
+.tl-row:nth-child(2){transition-delay:.1s}.tl-row:nth-child(3){transition-delay:.2s}.tl-row:nth-child(4){transition-delay:.3s}.tl-row:nth-child(5){transition-delay:.4s}.tl-row:nth-child(6){transition-delay:.5s}
+.tl-date{font-family:'Caveat',cursive;font-size:.9rem;color:var(--muted);text-align:right;padding-right:.5rem;padding-top:.25rem;line-height:1.3}
+.tl-dot-wrap{display:flex;justify-content:center;padding-top:.3rem;position:relative;z-index:2}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2.5px solid var(--coral);flex-shrink:0;transition:background .3s,transform .3s}
+.tl-row:hover .tl-dot{background:var(--coral);transform:scale(1.25)}
+.tl-body{background:var(--paper-warm);border:1.5px solid rgba(44,31,20,.07);padding:1.2rem 1.4rem;position:relative;box-shadow:2px 3px 12px rgba(44,31,20,.06);transition:box-shadow .3s,transform .2s}
+.tl-row:hover .tl-body{box-shadow:4px 6px 20px rgba(44,31,20,.1);transform:translateX(3px)}
+.tl-body-tape{position:absolute;top:-10px;right:20px;width:50px;height:16px;border-radius:2px;background:rgba(245,200,66,.55);transform:rotate(-1.5deg)}
+.tl-emoji{font-size:1.4rem;float:right;margin-left:.5rem}
+.tl-h{font-family:'Caveat',cursive;font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:.35rem}
+.tl-p{font-size:.95rem;line-height:1.75;color:var(--ink-mid);opacity:.75}
+.tl-h mark{background:linear-gradient(to top,rgba(245,200,66,.5) 30%,transparent 30%);padding:0 2px}
 
-/* Sky gradient */
-.hero-bg {
-  position:absolute; inset:0;
-  background:linear-gradient(180deg,
-    #c8e8f5 0%, #dff2fa 25%, #f5f0e8 65%, #fde8d0 100%
-  );
-}
-/* Clouds */
-.cloud {
-  position:absolute; border-radius:50px;
-  background:rgba(255,255,255,.7);
-  filter:blur(1px);
-}
-.cloud-1 { width:140px; height:45px; top:15%; left:8%; animation:drift1 18s ease-in-out infinite; }
-.cloud-2 { width:90px; height:30px; top:22%; right:15%; animation:drift2 22s ease-in-out infinite; }
-.cloud-3 { width:110px; height:38px; top:10%; left:40%; animation:drift1 25s ease-in-out infinite 3s; }
-.cloud::before, .cloud::after {
-  content:''; position:absolute; background:rgba(255,255,255,.8); border-radius:50%;
-}
-.cloud::before { width:55%; height:160%; top:-40%; left:20%; }
-.cloud::after  { width:40%; height:140%; top:-30%; right:15%; }
-@keyframes drift1 {
-  0%,100% { transform:translateX(0); }
-  50% { transform:translateX(15px); }
-}
-@keyframes drift2 {
-  0%,100% { transform:translateX(0); }
-  50% { transform:translateX(-12px); }
-}
+.gallery-section{padding:5rem 0;background:linear-gradient(180deg,var(--paper),#ecf6fb)}
+.polaroid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.polaroid{background:white;padding:1rem 1rem .7rem;box-shadow:3px 5px 20px rgba(44,31,20,.12);position:relative;cursor:none;opacity:0;transform:translateY(20px) rotate(var(--rot,0deg));transition:opacity .6s ease,transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s}
+.polaroid.visible{opacity:1!important;transform:rotate(var(--rot,0deg))!important}
+.polaroid:nth-child(1){--rot:-2.5deg}.polaroid:nth-child(2){--rot:1.2deg;margin-top:1.5rem}.polaroid:nth-child(3){--rot:-1deg}.polaroid:nth-child(4){--rot:2.1deg;margin-top:-1rem}.polaroid:nth-child(5){--rot:-.8deg;margin-top:.8rem}.polaroid:nth-child(6){--rot:1.8deg}
+.polaroid:hover{transform:rotate(0deg) scale(1.04) translateY(-6px)!important;box-shadow:8px 16px 40px rgba(44,31,20,.2);z-index:10}
+.polaroid::before{content:'';position:absolute;top:-11px;left:50%;transform:translateX(-50%);width:50px;height:18px;border-radius:2px;opacity:.8}
+.polaroid:nth-child(odd)::before{background:rgba(245,200,66,.7);transform:translateX(-50%) rotate(-1deg)}.polaroid:nth-child(even)::before{background:rgba(168,216,234,.7);transform:translateX(-50%) rotate(1.5deg)}
+.polaroid-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,var(--sky),var(--paper-warm));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;position:relative;overflow:hidden}
+.po-icon{font-size:2.4rem;opacity:.55}.po-placeholder{font-family:'Caveat',cursive;font-size:.85rem;color:rgba(44,31,20,.3);text-align:center;padding:0 .5rem}
+.polaroid-caption{margin-top:.7rem;text-align:center;font-family:'Caveat',cursive;font-size:1rem;color:var(--ink-mid);line-height:1.3}
+.polaroid-strip{height:4px;margin:-1px -1rem 0;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep),var(--sage))}
+/* NUT TAI ANH - hien o goc duoi-phai khi hover vao polaroid */
+.po-dl{position:absolute;bottom:.5rem;right:.5rem;z-index:20;background:var(--coral);color:#fff;border:none;border-radius:3px;padding:.3rem .65rem;font-family:'Caveat',cursive;font-size:.78rem;font-weight:700;line-height:1;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(232,133,106,.45);opacity:0;transform:translateY(5px);pointer-events:none;transition:opacity .18s ease,transform .18s ease,background .15s;}
+.polaroid:hover .po-dl{opacity:1;transform:translateY(0);pointer-events:all}
+.po-dl:hover{background:#d4704f}
+.po-dl.busy{background:rgba(44,31,20,.22);pointer-events:none}
 
-/* Scattered decorative elements */
-.deco-star {
-  position:absolute; font-size:1.2rem;
-  animation:twinkle 3s ease-in-out infinite;
-  opacity:.6;
-}
-@keyframes twinkle {
-  0%,100% { opacity:.4; transform:scale(1) rotate(0deg); }
-  50% { opacity:.9; transform:scale(1.15) rotate(10deg); }
-}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:600;background:rgba(44,31,20,.88);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-card{background:white;padding:1.5rem 1.5rem 1rem;box-shadow:8px 12px 40px rgba(44,31,20,.35);transform:rotate(-1deg);max-width:400px;width:90%}
+.lb-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,var(--sky),var(--paper-warm))}
+.lb-cap{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--ink-mid);text-align:center;margin-top:.8rem}
+.lb-close{position:absolute;top:1.5rem;right:2rem;font-family:'Caveat',cursive;font-size:1rem;color:rgba(254,249,240,.6);cursor:pointer;transition:color .2s}
+.lb-close:hover{color:white}
 
-/* Paper card in hero */
-.hero-card {
-  position:relative; z-index:2;
-  background:var(--paper);
-  padding:3rem 4rem 3.5rem;
-  box-shadow:4px 6px 30px rgba(44,31,20,.12), 0 2px 8px rgba(44,31,20,.06);
-  transform:rotate(-.4deg);
-  max-width:700px; width:100%;
-  border:1px solid rgba(44,31,20,.07);
-}
-/* Dog-ear */
-.hero-card::before {
-  content:''; position:absolute; bottom:0; right:0;
-  border-style:solid; border-width:0 0 28px 28px;
-  border-color:transparent transparent #e8dcc8 transparent;
-  filter:drop-shadow(-2px -2px 3px rgba(44,31,20,.1));
-}
-/* Margin line */
-.hero-card::after {
-  content:''; position:absolute; left:52px; top:0; bottom:0; width:1px;
-  background:rgba(232,133,106,.25);
-}
-/* Tape on card */
-.hero-tape-top {
-  position:absolute; top:-14px; left:50%; transform:translateX(-50%) rotate(-.8deg);
-  width:90px; height:26px; background:rgba(245,200,66,.55);
-  border-radius:2px;
-}
-.hero-tape-left {
-  position:absolute; top:30px; left:-12px; transform:rotate(92deg);
-  width:55px; height:18px; background:rgba(168,216,234,.55); border-radius:2px;
-}
+/* LETTER */
+.letter-section{padding:5rem 0 6rem;background:linear-gradient(180deg,#ecf6fb,var(--paper-warm))}
+.letter-inner{max-width:680px;margin:0 auto;padding:0 2rem}
+.letter-envelope{text-align:center;margin-bottom:2rem}
+.envelope-icon{font-size:3.5rem;animation:wobble 3s ease-in-out infinite;display:inline-block}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+.envelope-label{font-family:'Caveat',cursive;font-size:.9rem;color:var(--muted);display:block;margin-top:.3rem}
+.letter-page{background:var(--paper);border:1px solid rgba(44,31,20,.08);padding:3.5rem 3rem 3rem;box-shadow:4px 6px 24px rgba(44,31,20,.1);position:relative;transform:rotate(-.3deg)}
+.letter-page::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 31px,rgba(168,216,234,.25) 31px,rgba(168,216,234,.25) 32px)}
+.letter-page::after{content:'';position:absolute;left:55px;top:0;bottom:0;width:1px;background:rgba(232,133,106,.3)}
+.letter-tape{position:absolute;top:-13px;right:60px;width:70px;height:22px;border-radius:2px;background:rgba(168,216,234,.6);transform:rotate(1.2deg)}
+.letter-greeting{font-family:'Caveat',cursive;font-size:1.3rem;font-weight:700;color:var(--coral);position:relative;z-index:1;margin-bottom:1.2rem}
+.letter-body{font-family:'Newsreader',serif;font-style:italic;font-size:1.05rem;line-height:2;color:var(--ink-mid);position:relative;z-index:1}
+.letter-body p{margin-bottom:1rem}
+.letter-body .underline{text-decoration:underline;text-decoration-color:var(--sun);text-underline-offset:3px}
+.letter-sign{margin-top:2rem;text-align:right;position:relative;z-index:1}
+.letter-sign-name{font-family:'Gochi Hand',cursive;font-size:1.6rem;color:var(--coral)}
+.letter-sign-date{font-family:'Caveat',cursive;font-size:.85rem;color:var(--muted);margin-top:.2rem}
+.letter-doodle{position:absolute;left:12px;font-size:1.1rem;opacity:.45}
 
-.hero-eyebrow {
-  font-family:'Caveat', cursive; font-size:1rem; color:var(--muted);
-  letter-spacing:.08em; margin-bottom:.6rem;
-  opacity:0; animation:slideUp .7s ease forwards .2s;
-}
-.hero-title {
-  font-family:'Gochi Hand', cursive;
-  font-size:clamp(2.6rem,7vw,5.2rem); line-height:1.05;
-  color:var(--ink);
-  opacity:0; animation:slideUp .9s ease forwards .4s;
-}
-.hero-title .accent { color:var(--coral); }
-.hero-title .accent2 { color:var(--sky-deep); }
-.hero-year-tag {
-  display:inline-block; margin-top:.9rem;
-  background:var(--sun); color:var(--ink); padding:.25rem 1.2rem;
-  font-family:'Caveat', cursive; font-size:1.15rem; font-weight:700;
-  transform:rotate(.8deg);
-  box-shadow:2px 2px 0 rgba(44,31,20,.15);
-  opacity:0; animation:slideUp .7s ease forwards .6s;
-}
-.hero-sub {
-  margin-top:1.2rem;
-  font-style:italic; font-size:1.05rem; line-height:1.8;
-  color:var(--ink-mid); opacity:.7;
-  opacity:0; animation:slideUp .7s ease forwards .8s;
-}
-/* fix double opacity issue with animation */
-.hero-sub.animated { opacity:1; }
+/* FOOTER */
+footer{background:var(--paper-warm);border-top:2px dashed rgba(44,31,20,.1);padding:3rem 2rem;text-align:center;position:relative;z-index:1}
+.footer-doodle{font-family:'Caveat',cursive;font-size:1.8rem;font-weight:700;color:var(--coral);margin-bottom:.5rem;display:block}
+.footer-text{font-family:'Caveat',cursive;font-size:.9rem;color:var(--muted);letter-spacing:.06em}
+.footer-hearts{font-size:1.1rem;margin-top:.4rem;display:block;letter-spacing:.2em}
 
-/* Floating stickers */
-.sticker {
-  position:absolute; z-index:3; font-size:2.2rem;
-  filter:drop-shadow(2px 3px 4px rgba(44,31,20,.15));
-  animation:floatSticker 4s ease-in-out infinite;
-}
-@keyframes floatSticker {
-  0%,100% { transform:translateY(0) rotate(var(--rot,0deg)); }
-  50% { transform:translateY(-8px) rotate(calc(var(--rot,0deg) + 3deg)); }
-}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.polaroid.visible{opacity:1!important}
 
-.hero-scroll {
-  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:.4rem; z-index:3;
-  opacity:0; animation:slideUp .7s ease forwards 1.4s;
-}
-.scroll-pen {
-  font-size:1.5rem;
-  animation:bounce 1.5s ease-in-out infinite;
-}
-@keyframes bounce {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(6px); }
-}
-.scroll-label {
-  font-family:'Caveat', cursive; font-size:.85rem; color:var(--muted);
-}
+/* PROGRESS BAR */
+#progress-bar{position:fixed;top:0;left:0;z-index:9999;height:3px;width:0%;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep),var(--sage));pointer-events:none;box-shadow:0 0 8px rgba(232,133,106,.5)}
 
-@keyframes slideUp {
-  from { opacity:0; transform:translateY(20px); }
-  to   { opacity:1; transform:translateY(0); }
-}
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:8000;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity .7s ease,visibility .7s ease}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-emoji{font-size:3.5rem;animation:lBounce .7s ease-in-out infinite alternate}
+@keyframes lBounce{from{transform:translateY(0) rotate(-6deg) scale(1)}to{transform:translateY(-14px) rotate(6deg) scale(1.1)}}
+.loader-title{font-family:'Gochi Hand',cursive;font-size:1.5rem;color:var(--ink)}
+.loader-bar-wrap{width:180px;height:5px;background:rgba(44,31,20,.08);border-radius:99px;overflow:hidden}
+.loader-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep));border-radius:99px;transition:width .04s linear}
+.loader-tip{font-family:'Caveat',cursive;font-size:.9rem;color:var(--muted);font-style:italic}
 
-/* ── SECTION LAYOUT ── */
-section { position:relative; z-index:1; }
-.section-wrap { max-width:960px; margin:0 auto; padding:0 2rem; }
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem}
+.hamburger span{display:block;width:22px;height:2px;background:var(--coral);border-radius:2px;transition:all .3s;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-.section-heading {
-  display:flex; flex-direction:column; gap:.4rem; margin-bottom:3rem;
-}
-.sh-eyebrow {
-  font-family:'Caveat', cursive; font-size:1rem; color:var(--muted);
-  letter-spacing:.06em;
-}
-.sh-title {
-  font-family:'Gochi Hand', cursive;
-  font-size:clamp(2rem,5vw,3rem); line-height:1.1; color:var(--ink);
-}
-.sh-squiggle {
-  width:60px; height:8px; margin-top:.2rem;
-  background:var(--coral); border-radius:4px;
-  position:relative; overflow:hidden;
-}
-.sh-squiggle::after {
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.4) 50%, transparent 100%);
-  animation:shimmer 2s linear infinite;
-}
-@keyframes shimmer { from { transform:translateX(-100%); } to { transform:translateX(200%); } }
+/* MOBILE MENU */
+.mobile-menu{position:fixed;top:54px;left:0;right:0;z-index:99;background:rgba(254,249,240,.97);backdrop-filter:blur(10px);border-bottom:1.5px solid rgba(168,216,234,.35);max-height:0;overflow:hidden;transition:max-height .35s ease}
+.mobile-menu.open{max-height:340px}
+.mobile-menu a{display:block;padding:.85rem 1.5rem;font-family:'Caveat',cursive;font-size:1.15rem;font-weight:600;color:var(--ink-mid);text-decoration:none;border-bottom:1px dashed rgba(44,31,20,.07);transition:color .2s,background .2s}
+.mobile-menu a:hover{color:var(--coral);background:rgba(232,133,106,.05)}
 
-/* ── COUNTDOWN ── */
-.countdown-section {
-  padding:5rem 0;
-  background:linear-gradient(180deg, #f5f0e8 0%, var(--paper-warm) 100%);
-  position:relative; overflow:hidden;
-}
-.countdown-section::before {
-  content:''; position:absolute; inset:0;
-  background:repeating-linear-gradient(
-    0deg, transparent 0px, transparent 27px,
-    rgba(168,216,234,.12) 27px, rgba(168,216,234,.12) 28px
-  );
-}
-.cd-inner { max-width:860px; margin:0 auto; padding:0 2rem; text-align:center; }
-.cd-note {
-  font-style:italic; font-size:1rem; color:var(--muted);
-  margin-bottom:2.5rem; line-height:1.7;
-}
-.cd-grid {
-  display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem;
-  margin-bottom:1.5rem;
-}
-.cd-card {
-  background:var(--paper);
-  border:1.5px solid rgba(44,31,20,.08);
-  padding:2rem .8rem;
-  box-shadow:3px 4px 16px rgba(44,31,20,.08);
-  position:relative;
-  transition:transform .3s;
-}
-.cd-card:hover { transform:translateY(-4px) rotate(.5deg); }
-/* tape on each card */
-.cd-card::before {
-  content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%);
-  width:40px; height:16px; border-radius:2px;
-}
-.cd-card:nth-child(1)::before { background:rgba(168,216,234,.6); }
-.cd-card:nth-child(2)::before { background:rgba(245,200,66,.6); }
-.cd-card:nth-child(3)::before { background:rgba(232,133,106,.5); }
-.cd-card:nth-child(4)::before { background:rgba(143,188,143,.6); }
+/* MUSIC PLAYER */
+.music-player{position:fixed;bottom:1.8rem;right:2rem;z-index:500;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;cursor:none}
+.mp-card{background:var(--paper);border:1.5px solid rgba(44,31,20,.1);box-shadow:3px 5px 20px rgba(44,31,20,.14);padding:.7rem 1rem .8rem;min-width:200px;transform:rotate(.6deg);position:relative;transition:transform .3s,box-shadow .3s}
+.mp-card:hover{transform:rotate(0deg) translateY(-2px);box-shadow:5px 8px 28px rgba(44,31,20,.18)}
+.mp-tape{position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-1deg);width:60px;height:18px;background:rgba(245,200,66,.65);border-radius:2px}
+.mp-song{font-family:'Caveat',cursive;font-size:.95rem;color:var(--ink-mid);text-align:center;margin-bottom:.55rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.mp-controls{display:flex;align-items:center;justify-content:center;gap:.6rem}
+.mp-btn{background:none;border:none;cursor:none;font-size:1.15rem;line-height:1;border-radius:50%;transition:transform .15s,background .15s;display:flex;align-items:center;justify-content:center;width:32px;height:32px}
+.mp-btn:hover{background:rgba(232,133,106,.12);transform:scale(1.15)}
+.mp-btn.play-btn{width:38px;height:38px;background:var(--coral);font-size:1rem;box-shadow:2px 3px 10px rgba(232,133,106,.35)}
+.mp-btn.play-btn:hover{background:#d4704f;transform:scale(1.12)}
+.mp-progress-wrap{width:100%;height:4px;background:rgba(44,31,20,.1);border-radius:99px;margin-top:.5rem;overflow:hidden}
+.mp-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--coral),var(--sun));border-radius:99px;transition:width .5s linear}
+.mp-vol-row{display:flex;align-items:center;gap:.4rem;margin-top:.45rem}
+.mp-vol-icon{font-size:.85rem}
+.mp-vol{-webkit-appearance:none;width:90px;height:3px;background:rgba(44,31,20,.15);border-radius:99px;outline:none;cursor:pointer}
+.mp-vol::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;background:var(--coral);border-radius:50%}
+.mp-dots{display:flex;justify-content:center;gap:5px;margin-top:.4rem}
+.mp-dot-el{width:6px;height:6px;border-radius:50%;background:rgba(44,31,20,.15);transition:background .3s,transform .3s;cursor:pointer}
+.mp-dot-el.active{background:var(--coral);transform:scale(1.3)}
+.mp-note{position:absolute;font-size:1rem;pointer-events:none;animation:noteFloat 2s ease-out forwards;opacity:0}
+@keyframes noteFloat{0%{opacity:.8;transform:translateY(0) rotate(-5deg)}100%{opacity:0;transform:translateY(-40px) rotate(10deg)}}
+.mp-toggle{background:var(--coral);border:none;border-radius:50%;width:44px;height:44px;font-size:1.3rem;display:flex;align-items:center;justify-content:center;cursor:none;box-shadow:2px 4px 14px rgba(232,133,106,.4);transition:transform .2s,box-shadow .2s}
+.mp-toggle:hover{transform:scale(1.1) rotate(-5deg);box-shadow:3px 6px 20px rgba(232,133,106,.5)}
+.mp-wave{display:flex;align-items:flex-end;gap:2px;height:14px}
+.mp-wave span{display:block;width:3px;background:var(--coral);border-radius:2px;animation:waveBar 1s ease-in-out infinite}
+.mp-wave span:nth-child(1){height:8px;animation-delay:0s}.mp-wave span:nth-child(2){height:14px;animation-delay:.15s}.mp-wave span:nth-child(3){height:10px;animation-delay:.3s}.mp-wave span:nth-child(4){height:14px;animation-delay:.1s}.mp-wave span:nth-child(5){height:6px;animation-delay:.25s}
+.mp-wave.paused span{animation-play-state:paused}
+@keyframes waveBar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.3)}}
 
-.cd-num {
-  font-family:'Caveat', cursive; font-size:clamp(3rem,7vw,4.5rem);
-  font-weight:700; color:var(--coral); display:block; line-height:1;
-  transition:transform .15s;
-}
-.cd-num.tick { transform:scale(1.08); color:var(--sky-deep); }
-.cd-label {
-  font-family:'Josefin Sans', sans-serif; font-size:.58rem;
-  letter-spacing:.3em; text-transform:uppercase; color:var(--muted);
-  margin-top:.4rem; display:block;
-}
-.cd-from {
-  font-family:'Caveat', cursive; font-size:.95rem; color:var(--muted);
-  margin-top:1rem;
-}
+/* ══════════════════════════════
+   LOMO CAMERA
+══════════════════════════════ */
+.lomo-section{padding:5rem 0;background:linear-gradient(180deg,#0a0602,#1c0e06,#0a0602);position:relative;overflow:hidden}
+.lomo-bar{position:absolute;left:0;right:0;height:34px;background:#050301;z-index:2;pointer-events:none;display:flex;align-items:center;padding:0 6px;gap:12px;overflow:hidden}
+.lomo-bar.top{top:0}.lomo-bar.bot{bottom:0}
+.lomo-hole{width:18px;height:14px;flex-shrink:0;background:#1a0c04;border-radius:3px;border:1px solid rgba(255,255,255,.06)}
+.lomo-inner{max-width:940px;margin:0 auto;padding:2.5rem 2rem;position:relative;z-index:1}
+.lomo-section .sh-eyebrow{color:rgba(245,200,66,.5)}
+.lomo-section .sh-title{color:#fef9f0}
+.lomo-section .sh-squiggle{background:var(--sun)}
+.lomo-sub{font-family:'Caveat',cursive;font-size:1rem;color:rgba(254,249,240,.3);font-style:italic;margin-bottom:1.8rem;line-height:1.6}
+.lomo-drop{border:2px dashed rgba(245,200,66,.28);padding:3rem 2rem;text-align:center;cursor:pointer;background:rgba(255,255,255,.02);transition:border-color .25s,background .25s;position:relative}
+.lomo-drop:hover,.lomo-drop.over{border-color:rgba(245,200,66,.65);background:rgba(245,200,66,.04)}
+.lomo-drop input{display:none}
+.lomo-drop-ico{font-size:2.8rem;display:block;margin-bottom:.7rem;opacity:.55}
+.lomo-drop-ttl{font-family:'Caveat',cursive;font-size:1.05rem;color:rgba(254,249,240,.4)}
+.lomo-drop-hint{font-family:'Caveat',cursive;font-size:.82rem;color:rgba(254,249,240,.18);margin-top:.35rem;display:block}
+.lomo-ws{display:none;margin-top:1.8rem}
+.lomo-ws.on{display:block}
+.lomo-layout{display:grid;grid-template-columns:1fr 270px;gap:1.6rem;align-items:start}
+.lomo-cvs-wrap{background:#050301;padding:10px 10px 0;box-shadow:0 0 50px rgba(0,0,0,.8);position:relative}
+.lomo-cvs-tape{position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-1.2deg);width:60px;height:15px;background:rgba(245,200,66,.48);border-radius:2px}
+#lomoCanvas{display:block;width:100%;height:auto}
+.lomo-cap-bar{background:#050301;padding:7px 12px 10px;display:flex;align-items:center;gap:8px}
+.lomo-cap-dot{width:7px;height:7px;border-radius:50%;background:rgba(245,200,66,.28);flex-shrink:0}
+#lomoCap{background:none;border:none;outline:none;font-family:'Caveat',cursive;font-size:.92rem;color:rgba(254,249,240,.32);flex:1}
+#lomoCap::placeholder{color:rgba(254,249,240,.14)}
+.lomo-strip-scroll{overflow-x:auto;padding:.4rem 0 .8rem;margin-top:12px;scrollbar-width:thin;scrollbar-color:rgba(245,200,66,.2) transparent}
+.lomo-strip-scroll::-webkit-scrollbar{height:3px}.lomo-strip-scroll::-webkit-scrollbar-thumb{background:rgba(245,200,66,.2);border-radius:2px}
+.lomo-strip{display:flex;gap:7px;width:max-content}
+.lomo-sitem{flex-shrink:0;width:76px;cursor:pointer;background:#0a0602;padding:3px 3px 5px;border:1.5px solid rgba(255,255,255,.06);transition:border-color .2s}
+.lomo-sitem:hover,.lomo-sitem.on{border-color:rgba(245,200,66,.55)}
+.lomo-sitem canvas{display:block;width:100%;height:60px;object-fit:cover}
+.lomo-sname{font-family:'Caveat',cursive;font-size:.6rem;color:rgba(254,249,240,.28);text-align:center;display:block;margin-top:3px;line-height:1.2}
+.lomo-ctrl{display:flex;flex-direction:column;gap:.9rem}
+.lomo-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:.85rem}
+.lomo-box-ttl{font-family:'Caveat',cursive;font-size:.72rem;color:rgba(245,200,66,.45);letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:.7rem}
+.lomo-fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.lomo-fbtn{background:none;border:1px solid rgba(255,255,255,.08);padding:5px 2px;cursor:pointer;font-family:'Caveat',cursive;font-size:.72rem;color:rgba(254,249,240,.38);text-align:center;line-height:1.5;transition:all .2s;border-radius:1px}
+.lomo-fbtn span{display:block;font-size:1.05rem;margin-bottom:2px}
+.lomo-fbtn:hover{border-color:rgba(245,200,66,.38);color:rgba(245,200,66,.65)}
+.lomo-fbtn.on{background:rgba(245,200,66,.1);border-color:rgba(245,200,66,.65);color:#f5c842}
+.lomo-sl-row{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.lomo-sl-lbl{font-family:'Caveat',cursive;font-size:.8rem;color:rgba(254,249,240,.3);width:60px;flex-shrink:0}
+.lomo-sl{-webkit-appearance:none;flex:1;height:3px;background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer}
+.lomo-sl::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;background:#f5c842;border-radius:50%;box-shadow:0 0 5px rgba(245,200,66,.38)}
+.lomo-sl-val{font-family:'Caveat',cursive;font-size:.76rem;color:rgba(245,200,66,.42);width:24px;text-align:right;flex-shrink:0}
+.lomo-dl{width:100%;padding:.65rem;background:var(--coral);border:none;cursor:pointer;font-family:'Caveat',cursive;font-size:1rem;font-weight:700;color:#fff;border-radius:2px;box-shadow:0 3px 12px rgba(232,133,106,.3);transition:transform .15s,box-shadow .15s;margin-bottom:.45rem}
+.lomo-dl:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(232,133,106,.45)}
+.lomo-reset{width:100%;padding:.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Caveat',cursive;font-size:.88rem;color:rgba(254,249,240,.38);border-radius:2px;transition:background .2s,color .2s}
+.lomo-reset:hover{background:rgba(255,255,255,.08);color:rgba(254,249,240,.65)}
 
-/* ── TIMELINE ── */
-.timeline-section {
-  padding:5rem 0;
-  background:var(--paper);
-}
-.tl-list { margin-top:3rem; position:relative; padding-left:2rem; }
-/* Vertical rule like notebook margin */
-.tl-list::before {
-  content:''; position:absolute; left:60px; top:0; bottom:0; width:1.5px;
-  background:rgba(232,133,106,.3);
-}
-
-.tl-row {
-  display:grid; grid-template-columns:60px auto 1fr;
-  gap:0 1.5rem; margin-bottom:2.8rem; align-items:start;
-  opacity:0; transform:translateX(-20px);
-  transition:opacity .7s ease, transform .7s ease;
-}
-.tl-row.visible { opacity:1; transform:translateX(0); }
-.tl-row:nth-child(2) { transition-delay:.1s; }
-.tl-row:nth-child(3) { transition-delay:.2s; }
-.tl-row:nth-child(4) { transition-delay:.3s; }
-.tl-row:nth-child(5) { transition-delay:.4s; }
-.tl-row:nth-child(6) { transition-delay:.5s; }
-
-.tl-date {
-  font-family:'Caveat', cursive; font-size:.9rem; color:var(--muted);
-  text-align:right; padding-right:.5rem; padding-top:.25rem; line-height:1.3;
-}
-.tl-dot-wrap {
-  display:flex; justify-content:center; padding-top:.3rem; position:relative; z-index:2;
-}
-.tl-dot {
-  width:14px; height:14px; border-radius:50%;
-  background:var(--paper);
-  border:2.5px solid var(--coral);
-  flex-shrink:0;
-  transition:background .3s, transform .3s;
-  cursor:none;
-}
-.tl-row:hover .tl-dot { background:var(--coral); transform:scale(1.25); }
-
-.tl-body {
-  background:var(--paper-warm);
-  border:1.5px solid rgba(44,31,20,.07);
-  padding:1.2rem 1.4rem; position:relative;
-  box-shadow:2px 3px 12px rgba(44,31,20,.06);
-  transition:box-shadow .3s, transform .2s;
-}
-.tl-row:hover .tl-body {
-  box-shadow:4px 6px 20px rgba(44,31,20,.1);
-  transform:translateX(3px);
-}
-/* Tape on random entries */
-.tl-body-tape {
-  position:absolute; top:-10px; right:20px;
-  width:50px; height:16px; border-radius:2px;
-  background:rgba(245,200,66,.55);
-  transform:rotate(-1.5deg);
-}
-.tl-emoji { font-size:1.4rem; float:right; margin-left:.5rem; }
-.tl-h {
-  font-family:'Caveat', cursive; font-size:1.25rem; font-weight:700;
-  color:var(--ink); margin-bottom:.35rem;
-}
-.tl-p {
-  font-size:.95rem; line-height:1.75; color:var(--ink-mid); opacity:.75;
-}
-/* Highlight underline on some titles */
-.tl-h mark {
-  background:linear-gradient(to top, rgba(245,200,66,.5) 30%, transparent 30%);
-  padding:0 2px;
-}
-
-/* ── GALLERY ── */
-.gallery-section {
-  padding:5rem 0;
-  background:linear-gradient(180deg, var(--paper) 0%, #ecf6fb 100%);
-}
-.polaroid-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.5rem; margin-top:2.5rem;
-}
-.polaroid {
-  background:white;
-  padding:1rem 1rem .7rem;
-  box-shadow:3px 5px 20px rgba(44,31,20,.12);
-  position:relative; cursor:none;
-  opacity:0;
-  transform:translateY(20px) rotate(var(--rot, 0deg));
-  transition:opacity .6s ease, transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s;
-}
-.polaroid.visible {
-  opacity:1 !important;
-  transform:rotate(var(--rot, 0deg)) !important;
-}
-.polaroid:nth-child(1) { --rot:-2.5deg; }
-.polaroid:nth-child(2) { --rot:1.2deg;  margin-top:1.5rem; }
-.polaroid:nth-child(3) { --rot:-1deg;   }
-.polaroid:nth-child(4) { --rot:2.1deg;  margin-top:-1rem; }
-.polaroid:nth-child(5) { --rot:-.8deg;  margin-top:.8rem; }
-.polaroid:nth-child(6) { --rot:1.8deg;  }
-.polaroid:hover {
-  transform:rotate(0deg) scale(1.04) translateY(-6px) !important;
-  box-shadow:8px 16px 40px rgba(44,31,20,.2); z-index:10;
-}
-/* Tape on polaroids */
-.polaroid::before {
-  content:''; position:absolute; top:-11px; left:50%; transform:translateX(-50%);
-  width:50px; height:18px; border-radius:2px; opacity:.8;
-}
-.polaroid:nth-child(odd)::before  { background:rgba(245,200,66,.7); transform:translateX(-50%) rotate(-1deg); }
-.polaroid:nth-child(even)::before { background:rgba(168,216,234,.7); transform:translateX(-50%) rotate(1.5deg); }
-
-.polaroid-img {
-  width:100%; aspect-ratio:1;
-  background:linear-gradient(135deg, var(--sky) 0%, var(--paper-warm) 100%);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:.5rem; position:relative; overflow:hidden;
-}
-/* Faded color overlay for vintage effect */
-.polaroid-img::after {
-  content:''; position:absolute; inset:0;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(245,200,66,.12) 0%, transparent 60%);
-  mix-blend-mode:screen;
-}
-.po-icon { font-size:2.4rem; opacity:.55; }
-.po-placeholder {
-  font-family:'Caveat', cursive; font-size:.85rem;
-  color:rgba(44,31,20,.3); text-align:center; padding:0 .5rem;
-}
-.polaroid-caption {
-  margin-top:.7rem; text-align:center;
-  font-family:'Caveat', cursive; font-size:1rem; color:var(--ink-mid);
-  line-height:1.3;
-}
-/* Colored border strip like Fujifilm instant */
-.polaroid-strip {
-  height:4px; margin:-1px -1rem 0; 
-  background:linear-gradient(90deg, var(--coral), var(--sun), var(--sky-deep), var(--sage));
-}
-
-/* ── LETTER ── */
-.letter-section {
-  padding:5rem 0 6rem;
-  background:linear-gradient(180deg, #ecf6fb 0%, var(--paper-warm) 100%);
-}
-.letter-inner { max-width:680px; margin:0 auto; padding:0 2rem; }
-.letter-envelope {
-  text-align:center; margin-bottom:2rem;
-}
-.envelope-icon {
-  font-size:3.5rem;
-  animation:wobble 3s ease-in-out infinite;
-  display:inline-block;
-}
-@keyframes wobble {
-  0%,100% { transform:rotate(0deg); }
-  25% { transform:rotate(-5deg); }
-  75% { transform:rotate(5deg); }
-}
-.envelope-label {
-  font-family:'Caveat', cursive; font-size:.9rem; color:var(--muted);
-  display:block; margin-top:.3rem;
-}
-
-.letter-page {
-  background:var(--paper);
-  border:1px solid rgba(44,31,20,.08);
-  padding:3.5rem 3rem 3rem;
-  box-shadow:4px 6px 24px rgba(44,31,20,.1);
-  position:relative; transform:rotate(-.3deg);
-}
-/* Notebook lines */
-.letter-page::before {
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background:repeating-linear-gradient(
-    0deg, transparent 0px, transparent 31px,
-    rgba(168,216,234,.25) 31px, rgba(168,216,234,.25) 32px
-  );
-}
-/* Red margin line */
-.letter-page::after {
-  content:''; position:absolute; left:55px; top:0; bottom:0; width:1px;
-  background:rgba(232,133,106,.3);
-}
-/* Tape strip on page */
-.letter-tape {
-  position:absolute; top:-13px; right:60px;
-  width:70px; height:22px; border-radius:2px;
-  background:rgba(168,216,234,.6); transform:rotate(1.2deg);
-}
-
-.letter-greeting {
-  font-family:'Caveat', cursive; font-size:1.3rem; font-weight:700;
-  color:var(--coral); position:relative; z-index:1; margin-bottom:1.2rem;
-}
-.letter-body {
-  font-family:'Newsreader', serif; font-style:italic;
-  font-size:1.05rem; line-height:2; color:var(--ink-mid);
-  position:relative; z-index:1;
-}
-.letter-body p { margin-bottom:1rem; }
-.letter-body .underline {
-  text-decoration:underline; text-decoration-color:var(--sun);
-  text-underline-offset:3px;
-}
-.letter-sign {
-  margin-top:2rem; text-align:right; position:relative; z-index:1;
-}
-.letter-sign-name {
-  font-family:'Gochi Hand', cursive; font-size:1.6rem; color:var(--coral);
-}
-.letter-sign-date {
-  font-family:'Caveat', cursive; font-size:.85rem; color:var(--muted); margin-top:.2rem;
-}
-/* Doodles in letter margin */
-.letter-doodle {
-  position:absolute; left:12px; font-size:1.1rem; opacity:.45;
-}
-
-/* ── MARQUEE ── */
-.marquee-bar {
-  overflow:hidden; padding:8px 0;
-  background:var(--coral); position:relative; z-index:1;
-}
-.marquee-track {
-  display:flex; white-space:nowrap;
-  animation:marquee 18s linear infinite;
-}
-.marquee-item {
-  display:inline-flex; align-items:center; gap:1rem; padding:0 1.5rem;
-  font-family:'Caveat', cursive; font-size:1.05rem; color:rgba(255,255,255,.85);
-  font-weight:600;
-}
-.mq-dot { width:5px; height:5px; background:rgba(255,255,255,.5); border-radius:50%; }
-@keyframes marquee {
-  from { transform:translateX(0); } to { transform:translateX(-50%); }
-}
-
-/* ── FOOTER ── */
-footer {
-  background:var(--paper-warm);
-  border-top:2px dashed rgba(44,31,20,.1);
-  padding:3rem 2rem; text-align:center; position:relative; z-index:1;
-}
-.footer-doodle {
-  font-family:'Caveat', cursive; font-size:1.8rem; font-weight:700;
-  color:var(--coral); margin-bottom:.5rem; display:block;
-}
-.footer-text {
-  font-family:'Caveat', cursive; font-size:.9rem; color:var(--muted);
-  letter-spacing:.06em;
-}
-.footer-hearts { font-size:1.1rem; margin-top:.4rem; display:block; letter-spacing:.2em; }
-
-/* ── REVEAL ── */
-.reveal {
-  opacity:0; transform:translateY(20px);
-  transition:opacity .75s ease, transform .75s ease;
-}
-.reveal.visible { opacity:1; transform:translateY(0); }
-.polaroid.visible { opacity:1 !important; }
-
-/* ── PHOTO LIGHTBOX ── */
-.lightbox {
-  position:fixed; inset:0; z-index:600;
-  background:rgba(44,31,20,.88); backdrop-filter:blur(6px);
-  display:flex; align-items:center; justify-content:center;
-  opacity:0; pointer-events:none; transition:opacity .35s;
-}
-.lightbox.open { opacity:1; pointer-events:all; }
-.lb-card {
-  background:white; padding:1.5rem 1.5rem 1rem;
-  box-shadow:8px 12px 40px rgba(44,31,20,.35);
-  transform:rotate(-1deg); max-width:400px; width:90%;
-}
-.lb-img {
-  width:100%; aspect-ratio:1;
-  display:flex; align-items:center; justify-content:center;
-  font-size:5rem; background:linear-gradient(135deg, var(--sky), var(--paper-warm));
-}
-.lb-cap { font-family:'Caveat', cursive; font-size:1.1rem; color:var(--ink-mid); text-align:center; margin-top:.8rem; }
-.lb-close {
-  position:absolute; top:1.5rem; right:2rem;
-  font-family:'Caveat', cursive; font-size:1rem; color:rgba(254,249,240,.6);
-  cursor:none; transition:color .2s;
-}
-.lb-close:hover { color:white; }
-
-@media (max-width:768px) {
-  nav { padding:.8rem 1.2rem; }
-  .nav-links { display:none; }
-  .hero-card { padding:2rem 1.5rem 2.5rem; }
-  .hero-card::after { display:none; }
-  .cd-grid { grid-template-columns:repeat(2,1fr); }
-
-  /* Polaroid — bỏ margin âm gây đè nhau */
-  .polaroid-grid { grid-template-columns:1fr 1fr; gap:1.8rem 1rem; }
-  .polaroid:nth-child(1) { transform:rotate(-1.5deg); }
-  .polaroid:nth-child(2) { transform:rotate(1deg);   margin-top:0; }
-  .polaroid:nth-child(3) { transform:rotate(-1deg);  }
-  .polaroid:nth-child(4) { transform:rotate(1.5deg); margin-top:0; }
-  .polaroid:nth-child(5) { transform:rotate(-.5deg); margin-top:0; }
-  .polaroid:nth-child(6) { transform:rotate(1deg);   }
-
-  /* Timeline — thu gọn lại */
-  .tl-list { padding-left:0; }
-  .tl-list::before { left:30px; }
-  .tl-row { grid-template-columns:38px auto 1fr; gap:0 .8rem; }
-  .tl-date { font-size:.75rem; }
-
-  /* Letter */
-  .letter-page { padding:2.5rem 1.5rem 2rem; }
-  .letter-page::after { display:none; }
-  .letter-doodle { display:none; }
-
-  /* Cursor ẩn trên mobile */
-  .cursor { display:none; }
-  body { cursor:auto; }
-  .hamburger { display:flex !important; }
-  .nav-links { display:none !important; }
-
-  /* Music player mobile */
-  .music-player { bottom:1rem; right:1rem; }
-}
-
-/* ── PROGRESS BAR ── */
-#progress-bar {
-  position:fixed; top:0; left:0; z-index:9999;
-  height:3px; width:0%;
-  background:linear-gradient(90deg, var(--coral), var(--sun), var(--sky-deep), var(--sage));
-  transition:width .08s linear;
-  box-shadow:0 0 8px rgba(232,133,106,.5);
-  pointer-events:none;
-}
-
-/* ── LOADING SCREEN ── */
-#loader {
-  position:fixed; inset:0; z-index:8000;
-  background:var(--paper);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:1.2rem;
-  transition:opacity .7s ease, visibility .7s ease;
-}
-#loader.hide { opacity:0; visibility:hidden; pointer-events:none; }
-.loader-emoji {
-  font-size:3.5rem;
-  animation:lBounce .7s ease-in-out infinite alternate;
-}
-@keyframes lBounce {
-  from { transform:translateY(0) rotate(-6deg) scale(1); }
-  to   { transform:translateY(-14px) rotate(6deg) scale(1.1); }
-}
-.loader-title {
-  font-family:'Gochi Hand', cursive; font-size:1.5rem; color:var(--ink);
-}
-.loader-bar-wrap {
-  width:180px; height:5px;
-  background:rgba(44,31,20,.08); border-radius:99px; overflow:hidden;
-}
-.loader-bar {
-  height:100%; width:0%;
-  background:linear-gradient(90deg, var(--coral), var(--sun), var(--sky-deep));
-  border-radius:99px; transition:width .04s linear;
-}
-.loader-tip {
-  font-family:'Caveat', cursive; font-size:.9rem; color:var(--muted);
-  font-style:italic;
-}
-
-/* ── HAMBURGER ── */
-.hamburger {
-  display:none; flex-direction:column; gap:5px;
-  background:none; border:none; cursor:pointer; padding:.4rem;
-}
-.hamburger span {
-  display:block; width:22px; height:2px;
-  background:var(--coral); border-radius:2px;
-  transition:all .3s ease; transform-origin:center;
-}
-.hamburger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
-.hamburger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
-
-/* ── MOBILE MENU ── */
-.mobile-menu {
-  position:fixed; top:54px; left:0; right:0; z-index:99;
-  background:rgba(254,249,240,.97); backdrop-filter:blur(10px);
-  border-bottom:1.5px solid rgba(168,216,234,.35);
-  max-height:0; overflow:hidden;
-  transition:max-height .35s ease;
-}
-.mobile-menu.open { max-height:280px; }
-.mobile-menu a {
-  display:block; padding:.85rem 1.5rem;
-  font-family:'Caveat', cursive; font-size:1.15rem; font-weight:600;
-  color:var(--ink-mid); text-decoration:none;
-  border-bottom:1px dashed rgba(44,31,20,.07);
-  transition:color .2s, background .2s;
-}
-.mobile-menu a:active, .mobile-menu a:hover { color:var(--coral); background:rgba(232,133,106,.05); }
-
-/* ══════════════════════════════════
-   🎵 MUSIC PLAYER — notebook style
-══════════════════════════════════ */
-.music-player {
-  position: fixed;
-  bottom: 1.8rem;
-  right: 2rem;
-  z-index: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: .5rem;
-  cursor: none;
-}
-
-/* Tape strip on top of player card */
-.mp-card {
-  background: var(--paper);
-  border: 1.5px solid rgba(44,31,20,.1);
-  box-shadow: 3px 5px 20px rgba(44,31,20,.14);
-  padding: .7rem 1rem .8rem;
-  min-width: 200px;
-  transform: rotate(.6deg);
-  position: relative;
-  transition: transform .3s, box-shadow .3s;
-}
-.mp-card:hover {
-  transform: rotate(0deg) translateY(-2px);
-  box-shadow: 5px 8px 28px rgba(44,31,20,.18);
-}
-.mp-tape {
-  position: absolute;
-  top: -10px; left: 50%;
-  transform: translateX(-50%) rotate(-1deg);
-  width: 60px; height: 18px;
-  background: rgba(245,200,66,.65);
-  border-radius: 2px;
-}
-
-/* Song name */
-.mp-song {
-  font-family: 'Caveat', cursive;
-  font-size: .95rem;
-  color: var(--ink-mid);
-  text-align: center;
-  margin-bottom: .55rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px;
-}
-
-/* Controls row */
-.mp-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .6rem;
-}
-
-.mp-btn {
-  background: none;
-  border: none;
-  cursor: none;
-  font-size: 1.15rem;
-  line-height: 1;
-  padding: .2rem;
-  border-radius: 50%;
-  transition: transform .15s, background .15s;
-  display: flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px;
-}
-.mp-btn:hover { background: rgba(232,133,106,.12); transform: scale(1.15); }
-
-/* Play/pause big */
-.mp-btn.play-btn {
-  width: 38px; height: 38px;
-  background: var(--coral);
-  font-size: 1rem;
-  box-shadow: 2px 3px 10px rgba(232,133,106,.35);
-}
-.mp-btn.play-btn:hover {
-  background: #d4704f;
-  transform: scale(1.12);
-}
-
-/* Progress bar */
-.mp-progress-wrap {
-  width: 100%;
-  height: 4px;
-  background: rgba(44,31,20,.1);
-  border-radius: 99px;
-  margin-top: .5rem;
-  overflow: hidden;
-}
-.mp-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--coral), var(--sun));
-  border-radius: 99px;
-  transition: width .5s linear;
-}
-
-/* Volume row */
-.mp-vol-row {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  margin-top: .45rem;
-}
-.mp-vol-icon { font-size: .85rem; }
-.mp-vol {
-  -webkit-appearance: none;
-  width: 90px; height: 3px;
-  background: rgba(44,31,20,.15);
-  border-radius: 99px; outline: none; cursor: pointer;
-}
-.mp-vol::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px; height: 12px;
-  background: var(--coral);
-  border-radius: 50%;
-  box-shadow: 0 1px 4px rgba(232,133,106,.5);
-}
-
-/* Track dots */
-.mp-dots {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: .4rem;
-}
-.mp-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: rgba(44,31,20,.15);
-  transition: background .3s, transform .3s;
-}
-.mp-dot.active {
-  background: var(--coral);
-  transform: scale(1.3);
-}
-
-/* Note dancing animation */
-.mp-note {
-  position: absolute;
-  font-size: 1rem;
-  pointer-events: none;
-  animation: noteFloat 2s ease-out forwards;
-  opacity: 0;
-}
-@keyframes noteFloat {
-  0%   { opacity:.8; transform: translateY(0) rotate(-5deg); }
-  100% { opacity:0;  transform: translateY(-40px) rotate(10deg); }
-}
-
-/* Toggle button (show/hide player) */
-.mp-toggle {
-  background: var(--coral);
-  border: none;
-  border-radius: 50%;
-  width: 44px; height: 44px;
-  font-size: 1.3rem;
-  display: flex; align-items:center; justify-content:center;
-  cursor: none;
-  box-shadow: 2px 4px 14px rgba(232,133,106,.4);
-  transition: transform .2s, box-shadow .2s;
-  align-self: flex-end;
-}
-.mp-toggle:hover {
-  transform: scale(1.1) rotate(-5deg);
-  box-shadow: 3px 6px 20px rgba(232,133,106,.5);
-}
-
-/* Waveform bars (playing indicator) */
-.mp-wave {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 14px;
-}
-.mp-wave span {
-  display: block;
-  width: 3px;
-  background: var(--coral);
-  border-radius: 2px;
-  animation: waveBar 1s ease-in-out infinite;
-}
-.mp-wave span:nth-child(1) { height: 8px;  animation-delay: 0s; }
-.mp-wave span:nth-child(2) { height: 14px; animation-delay: .15s; }
-.mp-wave span:nth-child(3) { height: 10px; animation-delay: .3s; }
-.mp-wave span:nth-child(4) { height: 14px; animation-delay: .1s; }
-.mp-wave span:nth-child(5) { height: 6px;  animation-delay: .25s; }
-.mp-wave.paused span { animation-play-state: paused; }
-
-@keyframes waveBar {
-  0%,100% { transform: scaleY(1); }
-  50%      { transform: scaleY(.3); }
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:.8rem 1.2rem}.nav-links{display:none}.hamburger{display:flex!important}
+  .hero-card{padding:2rem 1.5rem 2.5rem}.hero-card::after{display:none}
+  .cd-grid{grid-template-columns:repeat(2,1fr)}
+  .polaroid-grid{grid-template-columns:1fr 1fr;gap:1.8rem 1rem}
+  .polaroid:nth-child(n){margin-top:0!important}
+  .tl-list{padding-left:0}.tl-list::before{left:30px}.tl-row{grid-template-columns:38px auto 1fr;gap:0 .8rem}.tl-date{font-size:.75rem}
+  .letter-page{padding:2.5rem 1.5rem 2rem}.letter-page::after{display:none}.letter-doodle{display:none}
+  .cursor,.music-player{display:none!important}
+  body{cursor:auto}
+  .lomo-layout{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- Progress Bar -->
 <div id="progress-bar"></div>
 
-<!-- Loading Screen -->
 <div id="loader">
   <div class="loader-emoji">📓</div>
   <div class="loader-title">Năm Cuối Cấp 2...</div>
@@ -952,145 +300,81 @@ footer {
   <div class="loader-tip">Đang mở cuốn sách kỉ niệm ✨</div>
 </div>
 
-<!-- Cursor -->
-<div class="cursor">
-  <div class="c-tip"></div>
-  <div class="c-trail"></div>
-</div>
+<div class="cursor"><div class="c-tip"></div><div class="c-trail"></div></div>
 
-<!-- ════════════════════════════
-     🎵 MUSIC PLAYER WIDGET
-════════════════════════════ -->
+<!-- MUSIC PLAYER -->
 <div class="music-player" id="musicPlayer">
-  <!-- Card (hidden by default, toggle shows it) -->
-  <div class="mp-card" id="mpCard" style="display:none">
+  <div class="mp-card" id="mpCard">
     <div class="mp-tape"></div>
-
-    <!-- Waveform + song name row -->
     <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.3rem">
-      <div class="mp-wave" id="mpWave">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
+      <div class="mp-wave" id="mpWave"><span></span><span></span><span></span><span></span><span></span></div>
       <div class="mp-song" id="mpSong">Nhạc kỉ niệm 🎵</div>
     </div>
-
-    <!-- Controls -->
     <div class="mp-controls">
-      <button class="mp-btn" id="mpPrev" title="Bài trước">⏮</button>
-      <button class="mp-btn play-btn" id="mpPlay" title="Phát / Tạm dừng">▶️</button>
-      <button class="mp-btn" id="mpNext" title="Bài tiếp">⏭</button>
+      <button class="mp-btn" id="mpPrev">⏮</button>
+      <button class="mp-btn play-btn" id="mpPlay">▶️</button>
+      <button class="mp-btn" id="mpNext">⏭</button>
     </div>
-
-    <!-- Progress -->
-    <div class="mp-progress-wrap">
-      <div class="mp-progress-fill" id="mpFill"></div>
-    </div>
-
-    <!-- Volume -->
+    <div class="mp-progress-wrap"><div class="mp-progress-fill" id="mpFill"></div></div>
     <div class="mp-vol-row">
       <span class="mp-vol-icon">🔈</span>
       <input type="range" class="mp-vol" id="mpVol" min="0" max="1" step="0.05" value="0.6">
       <span class="mp-vol-icon">🔊</span>
     </div>
-
-    <!-- Track dots -->
-    <div class="mp-dots">
-      <div class="mp-dot active" data-idx="0"></div>
-      <div class="mp-dot" data-idx="1"></div>
-    </div>
+    <div class="mp-dots" id="mpDots"></div>
   </div>
-
-  <!-- Toggle button (always visible) -->
-  <button class="mp-toggle" id="mpToggle" title="Nhạc nền 🎵">🎵</button>
+  <button class="mp-toggle" id="mpToggle">🎵</button>
 </div>
+<audio id="a1" preload="auto"><source src="1.mp3" type="audio/mpeg"></audio>
+<audio id="a2" preload="auto"><source src="2.mp3" type="audio/mpeg"></audio>
 
-<!-- Audio elements -->
-<audio id="audio1" preload="auto" loop="false">
-  <source src="1.mp3" type="audio/mpeg">
-</audio>
-<audio id="audio2" preload="auto" loop="false">
-  <source src="2.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Nav -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo">📓 Năm Cuối Cấp 2</div>
   <ul class="nav-links">
     <li><a href="#countdown">Ngày tháng</a></li>
     <li><a href="#timeline">Kỉ niệm</a></li>
     <li><a href="#gallery">Ảnh lớp</a></li>
-    <li><a href="#letter">Thư gửi tương lai</a></li>
+    <li><a href="#letter">Thư tương lai</a></li>
+    <li><a href="#lomo">Máy ảnh Lomo</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
-
-<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#countdown" onclick="closeMobileMenu()">⏳ Ngày tháng</a>
   <a href="#timeline" onclick="closeMobileMenu()">📌 Kỉ niệm</a>
   <a href="#gallery" onclick="closeMobileMenu()">📷 Ảnh lớp</a>
-  <a href="#letter" onclick="closeMobileMenu()">💌 Thư gửi tương lai</a>
+  <a href="#letter" onclick="closeMobileMenu()">💌 Thư tương lai</a>
+  <a href="#lomo" onclick="closeMobileMenu()">🎞️ Máy ảnh Lomo</a>
 </div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="cloud cloud-1"></div>
-  <div class="cloud cloud-2"></div>
-  <div class="cloud cloud-3"></div>
-
-  <!-- Floating stickers -->
+  <div class="cloud cloud-1"></div><div class="cloud cloud-2"></div><div class="cloud cloud-3"></div>
   <span class="sticker" style="top:18%;left:6%;--rot:-12deg;animation-delay:0s">🌻</span>
   <span class="sticker" style="top:25%;right:7%;--rot:8deg;animation-delay:.8s">⭐</span>
   <span class="sticker" style="top:60%;left:4%;--rot:-5deg;animation-delay:1.5s;font-size:1.6rem">✏️</span>
   <span class="sticker" style="top:65%;right:5%;--rot:15deg;animation-delay:.4s">🎒</span>
   <span class="sticker" style="bottom:20%;left:12%;--rot:-8deg;animation-delay:1s;font-size:1.5rem">📐</span>
   <span class="sticker" style="bottom:25%;right:10%;--rot:6deg;animation-delay:2s;font-size:1.5rem">🎨</span>
-
   <div class="hero-card">
-    <div class="hero-tape-top"></div>
-    <div class="hero-tape-left"></div>
-
+    <div class="hero-tape-top"></div><div class="hero-tape-left"></div>
     <p class="hero-eyebrow">📓 &nbsp;Năm học 2025 — 2026</p>
-    <h1 class="hero-title">
-      <span class="accent">Khép Lại</span><br>
-      Một <span class="accent2">Chương</span> Thật Đẹp
-    </h1>
+    <h1 class="hero-title"><span class="accent">Khép Lại</span><br>Một <span class="accent2">Chương</span> Thật Đẹp</h1>
     <div class="hero-year-tag">Lớp 9 — Chia Tay Cấp 2 🎓</div>
-    <p class="hero-sub">
-      Bốn năm cấp 2 — những buổi sáng cổng trường, những tiết học ồn ào,
-      những giờ ra chơi chạy nhảy, những trang vở nguệch ngoạc.
-      Tất cả sẽ mãi là một phần tuổi thơ đẹp nhất của chúng ta.
-    </p>
+    <p class="hero-sub">Bốn năm cấp 2 — những buổi sáng cổng trường, những tiết học ồn ào, những giờ ra chơi chạy nhảy, những trang vở nguệch ngoạc. Tất cả sẽ mãi là một phần tuổi thơ đẹp nhất của chúng ta.</p>
   </div>
-
-  <div class="hero-scroll">
-    <span class="scroll-pen">✏️</span>
-    <span class="scroll-label">Lật trang tiếp theo</span>
-  </div>
+  <div class="hero-scroll"><span class="scroll-pen">✏️</span><span class="scroll-label">Lật trang tiếp theo</span></div>
 </section>
 
-<!-- Marquee -->
-<div class="marquee-bar">
-  <div class="marquee-track" id="mq"></div>
-</div>
+<div class="marquee-bar"><div class="marquee-track" id="mq"></div></div>
 
 <!-- COUNTDOWN -->
 <section class="countdown-section" id="countdown">
   <div class="cd-inner">
-    <div class="section-heading reveal">
-      <span class="sh-eyebrow">⏳ Đếm ngày</span>
-      <h2 class="sh-title">Kể Từ Ngày Ra Trường...</h2>
-      <div class="sh-squiggle"></div>
-    </div>
-
-    <p class="cd-note reveal">
-      Từng giây trôi qua là một mảnh ký ức của tuổi học trò đang dần chín hơn,
-      đẹp hơn — như ảnh phim để lâu càng thêm màu sắc.
-    </p>
-
+    <div class="section-heading reveal"><span class="sh-eyebrow">⏳ Đếm ngày</span><h2 class="sh-title">Kể Từ Ngày Ra Trường...</h2><div class="sh-squiggle"></div></div>
+    <p class="cd-note reveal">Từng giây trôi qua là một mảnh ký ức của tuổi học trò đang dần chín hơn, đẹp hơn — như ảnh phim để lâu càng thêm màu sắc.</p>
     <div class="cd-grid">
       <div class="cd-card reveal"><span class="cd-num" id="cd-d">000</span><span class="cd-label">Ngày</span></div>
       <div class="cd-card reveal"><span class="cd-num" id="cd-h">00</span><span class="cd-label">Giờ</span></div>
@@ -1104,67 +388,13 @@ footer {
 <!-- TIMELINE -->
 <section class="timeline-section" id="timeline">
   <div class="section-wrap">
-    <div class="section-heading reveal">
-      <span class="sh-eyebrow">📌 Nhìn lại 4 năm</span>
-      <h2 class="sh-title">Những Trang Nhật Ký</h2>
-      <div class="sh-squiggle" style="background:var(--sky-deep)"></div>
-    </div>
-
+    <div class="section-heading reveal"><span class="sh-eyebrow">📌 Nhìn lại 4 năm</span><h2 class="sh-title">Những Trang Nhật Ký</h2><div class="sh-squiggle" style="background:var(--sky-deep)"></div></div>
     <div class="tl-list">
-      <div class="tl-row">
-        <div class="tl-date">Lớp 6</div>
-        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
-        <div class="tl-body">
-          <div class="tl-body-tape"></div>
-          <span class="tl-emoji">🆕</span>
-          <div class="tl-h"><mark>Ngày đầu tiên bước vào cấp 2</mark></div>
-          <p class="tl-p">Cặp mới, giày mới, lòng đầy hồi hộp. Ngôi trường to đùng, đi lạc mấy lần mới tìm được lớp. Nhìn ai cũng thấy ngại ngùng nhưng cũng muốn làm quen.</p>
-        </div>
-      </div>
-
-      <div class="tl-row">
-        <div class="tl-date">Lớp 6<br>HK2</div>
-        <div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--sky-deep)"></div></div>
-        <div class="tl-body" style="background:#f0f9ff">
-          <span class="tl-emoji">👯</span>
-          <div class="tl-h">Những người bạn đầu tiên</div>
-          <p class="tl-p">Từ "ngồi cạnh nhau tình cờ" trở thành "người tao không thể thiếu được". Bạn bè cấp 2 — loại tình bạn thật nhất, hồn nhiên nhất.</p>
-        </div>
-      </div>
-
-      <div class="tl-row">
-        <div class="tl-date">Lớp 7</div>
-        <div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--sun)"></div></div>
-        <div class="tl-body" style="background:#fffbf0">
-          <div class="tl-body-tape" style="background:rgba(168,216,234,.55)"></div>
-          <span class="tl-emoji">🏆</span>
-          <div class="tl-h"><mark>Lần đầu đạt thành tích</mark></div>
-          <p class="tl-p">Cái ngày tên mình được xướng lên trước lớp, trái tim đập như trống. Nhỏ thôi nhưng với chúng ta lúc đó — đó là cả thế giới.</p>
-        </div>
-      </div>
-
-      <div class="tl-row">
-        <div class="tl-date">Lớp 8</div>
-        <div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--sage)"></div></div>
-        <div class="tl-body" style="background:#f5fbf5">
-          <span class="tl-emoji">🎭</span>
-          <div class="tl-h">Năm của những hoạt động</div>
-          <p class="tl-p">Văn nghệ, hội trại, thi đua giữa các lớp. Cái năm mà ai cũng bỗng trở nên "tài năng" và chúng ta mới phát hiện ra mình thích gì.</p>
-        </div>
-      </div>
-
-      <div class="tl-row">
-        <div class="tl-date">Lớp 9<br>⚡ Cuối</div>
-        <div class="tl-dot-wrap">
-          <div class="tl-dot" style="border-color:var(--coral);background:var(--coral);box-shadow:0 0 0 4px rgba(232,133,106,.2)"></div>
-        </div>
-        <div class="tl-body" style="border-color:rgba(232,133,106,.35);background:#fff8f6">
-          <div class="tl-body-tape" style="background:rgba(232,133,106,.4)"></div>
-          <span class="tl-emoji">🎓</span>
-          <div class="tl-h" style="font-size:1.4rem"><mark>Năm cuối — Ngày chia tay</mark></div>
-          <p class="tl-p">Kỳ thi tốt nghiệp, lễ bế giảng, những tấm ảnh chụp vội, những cái ôm dài hơn bình thường. Chúng ta biết đây là kết thúc của một chương — và đó là lý do nó đẹp đến thế này.</p>
-        </div>
-      </div>
+      <div class="tl-row"><div class="tl-date">Lớp 6</div><div class="tl-dot-wrap"><div class="tl-dot"></div></div><div class="tl-body"><div class="tl-body-tape"></div><span class="tl-emoji">🆕</span><div class="tl-h"><mark>Ngày đầu tiên bước vào cấp 2</mark></div><p class="tl-p">Cặp mới, giày mới, lòng đầy hồi hộp. Ngôi trường to đùng, đi lạc mấy lần mới tìm được lớp. Nhìn ai cũng thấy ngại ngùng nhưng cũng muốn làm quen.</p></div></div>
+      <div class="tl-row"><div class="tl-date">Lớp 6<br>HK2</div><div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--sky-deep)"></div></div><div class="tl-body" style="background:#f0f9ff"><span class="tl-emoji">👯</span><div class="tl-h">Những người bạn đầu tiên</div><p class="tl-p">Từ "ngồi cạnh nhau tình cờ" trở thành "người tao không thể thiếu được". Bạn bè cấp 2 — loại tình bạn thật nhất, hồn nhiên nhất.</p></div></div>
+      <div class="tl-row"><div class="tl-date">Lớp 7</div><div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--sun)"></div></div><div class="tl-body" style="background:#fffbf0"><div class="tl-body-tape" style="background:rgba(168,216,234,.55)"></div><span class="tl-emoji">🏆</span><div class="tl-h"><mark>Lần đầu đạt thành tích</mark></div><p class="tl-p">Cái ngày tên mình được xướng lên trước lớp, trái tim đập như trống. Nhỏ thôi nhưng với chúng ta lúc đó — đó là cả thế giới.</p></div></div>
+      <div class="tl-row"><div class="tl-date">Lớp 8</div><div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--sage)"></div></div><div class="tl-body" style="background:#f5fbf5"><span class="tl-emoji">🎭</span><div class="tl-h">Năm của những hoạt động</div><p class="tl-p">Văn nghệ, hội trại, thi đua giữa các lớp. Cái năm mà ai cũng bỗng trở nên "tài năng" và chúng ta mới phát hiện ra mình thích gì.</p></div></div>
+      <div class="tl-row"><div class="tl-date">Lớp 9<br>⚡ Cuối</div><div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--coral);background:var(--coral);box-shadow:0 0 0 4px rgba(232,133,106,.2)"></div></div><div class="tl-body" style="border-color:rgba(232,133,106,.35);background:#fff8f6"><div class="tl-body-tape" style="background:rgba(232,133,106,.4)"></div><span class="tl-emoji">🎓</span><div class="tl-h" style="font-size:1.4rem"><mark>Năm cuối — Ngày chia tay</mark></div><p class="tl-p">Kỳ thi tốt nghiệp, lễ bế giảng, những tấm ảnh chụp vội, những cái ôm dài hơn bình thường. Chúng ta biết đây là kết thúc của một chương — và đó là lý do nó đẹp đến thế này.</p></div></div>
     </div>
   </div>
 </section>
@@ -1172,101 +402,27 @@ footer {
 <!-- GALLERY -->
 <section class="gallery-section" id="gallery">
   <div class="section-wrap" style="max-width:1080px">
-    <div class="section-heading reveal">
-      <span class="sh-eyebrow">📷 Polaroid của lớp mình</span>
-      <h2 class="sh-title">Những Khoảnh Khắc Đóng Đinh</h2>
-      <div class="sh-squiggle" style="background:var(--sun)"></div>
+    <div class="section-heading reveal"><span class="sh-eyebrow">📷 Polaroid của lớp mình</span><h2 class="sh-title">Những Khoảnh Khắc Đóng Đinh</h2><div class="sh-squiggle" style="background:var(--sun)"></div></div>
+    <div class="polaroid-grid">
+      <div class="polaroid"><div class="polaroid-img" style="background:linear-gradient(135deg,#c8e8f5,#dff2fa)"><span class="po-icon">🏫</span><span class="po-placeholder">Cổng trường quen thuộc</span><img src="c.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none'"></div><div class="polaroid-strip"></div><p class="polaroid-caption">Cổng trường quen thuộc 🏫</p><button class="po-dl" onclick="downloadPolaroid(this)" title="Tải ảnh về máy">⬇ Tải ảnh</button></div>
+      <div class="polaroid"><div class="polaroid-img" style="background:linear-gradient(135deg,#fde8d0,#f7db7a88)"><span class="po-icon">📚</span><span class="po-placeholder">Giờ học ồn ào</span></div><div class="polaroid-strip"></div><p class="polaroid-caption">Tiết học nhớ đời 📚</p><button class="po-dl" onclick="downloadPolaroid(this)" title="Tải ảnh về máy">⬇ Tải ảnh</button></div>
+      <div class="polaroid"><div class="polaroid-img" style="background:linear-gradient(135deg,#d4f4d4,#b8d8b8)"><span class="po-icon">🍱</span><span class="po-placeholder">Giờ nghỉ ăn trưa</span></div><div class="polaroid-strip"></div><p class="polaroid-caption">Bữa trưa bên nhau 🍱</p><button class="po-dl" onclick="downloadPolaroid(this)" title="Tải ảnh về máy">⬇ Tải ảnh</button></div>
+      <div class="polaroid"><div class="polaroid-img" style="background:linear-gradient(135deg,#fce4ec,#f2b39e88)"><span class="po-icon">🎭</span><span class="po-placeholder">Văn nghệ 20/11</span></div><div class="polaroid-strip"></div><p class="polaroid-caption">Buổi văn nghệ 🎭</p><button class="po-dl" onclick="downloadPolaroid(this)" title="Tải ảnh về máy">⬇ Tải ảnh</button></div>
+      <div class="polaroid"><div class="polaroid-img" style="background:linear-gradient(135deg,#e8f5e9,#c8e8f5)"><span class="po-icon">🏕️</span><span class="po-placeholder">Hội trại tháng 3</span></div><div class="polaroid-strip"></div><p class="polaroid-caption">Đêm lửa trại 🏕️</p><button class="po-dl" onclick="downloadPolaroid(this)" title="Tải ảnh về máy">⬇ Tải ảnh</button></div>
+      <div class="polaroid"><div class="polaroid-img" style="background:linear-gradient(135deg,#fff9c4,#f7db7a66)"><span class="po-icon">🎓</span><span class="po-placeholder">Lễ bế giảng cuối năm</span></div><div class="polaroid-strip"></div><p class="polaroid-caption">Ngày chia tay lớp 9 🎓</p><button class="po-dl" onclick="downloadPolaroid(this)" title="Tải ảnh về máy">⬇ Tải ảnh</button></div>
     </div>
-
-    <div class="polaroid-grid" id="polGrid">
-      <div class="polaroid">
-        <div class="polaroid-img" style="background:linear-gradient(135deg,#c8e8f5,#dff2fa)">
-          <span class="po-icon">🏫</span>
-          <span class="po-placeholder">Cổng trường quen thuộc</span>
-          <img src="c.jpg" 
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"
-               onerror="this.style.display='none'">
-        </div>
-        <div class="polaroid-strip"></div>
-        <p class="polaroid-caption">Cổng trường quen thuộc 🏫</p>
-      </div>
-
-      <div class="polaroid">
-        <div class="polaroid-img" style="background:linear-gradient(135deg,#fde8d0,#f7db7a88)">
-          <span class="po-icon">📚</span>
-          <span class="po-placeholder">Giờ học ồn ào</span>
-        </div>
-        <div class="polaroid-strip"></div>
-        <p class="polaroid-caption">Tiết học nhớ đời 📚</p>
-      </div>
-
-      <div class="polaroid">
-        <div class="polaroid-img" style="background:linear-gradient(135deg,#d4f4d4,#b8d8b8)">
-          <span class="po-icon">🍱</span>
-          <span class="po-placeholder">Giờ nghỉ ăn trưa</span>
-        </div>
-        <div class="polaroid-strip"></div>
-        <p class="polaroid-caption">Bữa trưa bên nhau 🍱</p>
-      </div>
-
-      <div class="polaroid">
-        <div class="polaroid-img" style="background:linear-gradient(135deg,#fce4ec,#f2b39e88)">
-          <span class="po-icon">🎭</span>
-          <span class="po-placeholder">Văn nghệ 20/11</span>
-        </div>
-        <div class="polaroid-strip"></div>
-        <p class="polaroid-caption">Buổi văn nghệ 🎭</p>
-      </div>
-
-      <div class="polaroid">
-        <div class="polaroid-img" style="background:linear-gradient(135deg,#e8f5e9,#c8e8f5)">
-          <span class="po-icon">🏕️</span>
-          <span class="po-placeholder">Hội trại tháng 3</span>
-        </div>
-        <div class="polaroid-strip"></div>
-        <p class="polaroid-caption">Đêm lửa trại 🏕️</p>
-      </div>
-
-      <div class="polaroid">
-        <div class="polaroid-img" style="background:linear-gradient(135deg,#fff9c4,#f7db7a66)">
-          <span class="po-icon">🎓</span>
-          <span class="po-placeholder">Lễ bế giảng cuối năm</span>
-        </div>
-        <div class="polaroid-strip"></div>
-        <p class="polaroid-caption">Ngày chia tay lớp 9 🎓</p>
-      </div>
-    </div>
-
-    <p class="reveal" style="text-align:center;margin-top:2rem;font-family:'Caveat',cursive;font-size:.95rem;color:var(--muted)">
-      📌Nhớ mãi không quên nhenn ...
-    </p>
+    <p class="reveal" style="text-align:center;margin-top:2rem;font-family:'Caveat',cursive;font-size:.95rem;color:var(--muted)">📌 Thêm ảnh thật của lớp bạn vào đây để website sống động hơn nhé!</p>
   </div>
 </section>
 
 <!-- LETTER -->
 <section class="letter-section" id="letter">
   <div class="letter-inner">
-    <div class="section-heading reveal" style="text-align:center;align-items:center">
-      <span class="sh-eyebrow">💌 Gửi tương lai</span>
-      <h2 class="sh-title">Thư Của Học Trò Lớp 9</h2>
-      <div class="sh-squiggle" style="background:var(--coral)"></div>
-    </div>
-
-    <div class="letter-envelope reveal">
-      <span class="envelope-icon">💌</span>
-      <span class="envelope-label">Để dành đọc lại khi lớn hơn...</span>
-    </div>
-
+    <div class="section-heading reveal" style="text-align:center;align-items:center"><span class="sh-eyebrow">💌 Gửi tương lai</span><h2 class="sh-title">Thư Của Học Trò Lớp 9</h2><div class="sh-squiggle" style="background:var(--coral)"></div></div>
+    <div class="letter-envelope reveal"><span class="envelope-icon">💌</span><span class="envelope-label">Để dành đọc lại khi lớn hơn...</span></div>
     <div class="letter-page reveal">
       <div class="letter-tape"></div>
-
-      <!-- Margin doodles -->
-      <span class="letter-doodle" style="top:3rem">⭐</span>
-      <span class="letter-doodle" style="top:7rem">✏️</span>
-      <span class="letter-doodle" style="top:11rem">💛</span>
-      <span class="letter-doodle" style="top:15rem">📌</span>
-      <span class="letter-doodle" style="top:19rem">🌻</span>
-
+      <span class="letter-doodle" style="top:3rem">⭐</span><span class="letter-doodle" style="top:7rem">✏️</span><span class="letter-doodle" style="top:11rem">💛</span><span class="letter-doodle" style="top:15rem">📌</span><span class="letter-doodle" style="top:19rem">🌻</span>
       <p class="letter-greeting">Gửi bản thân mình ở tương lai,</p>
       <div class="letter-body">
         <p>Tao đang ngồi viết bức thư này vào những ngày cuối cùng của lớp 9 — khi mà tờ lịch sắp sang trang, và ngôi trường cấp 2 này sắp trở thành ký ức.</p>
@@ -1276,25 +432,65 @@ footer {
         <p>Chúng ta sắp bước sang một chương mới. Đáng sợ, hào hứng, lẫn lộn. Nhưng mày sẽ ổn — vì mày đã từng không biết gì mà vẫn sống được qua 4 năm cấp 2 rồi đó thôi 😊</p>
         <p><strong>Cảm ơn cấp 2. Cảm ơn những người đã đồng hành.</strong></p>
       </div>
-      <div class="letter-sign">
-        <div class="letter-sign-name">Học trò lớp 9 ✦</div>
-        <div class="letter-sign-date">📅 Mùa hè 2025 — Ngày chia tay mái trường cấp 2</div>
+      <div class="letter-sign"><div class="letter-sign-name">Học trò lớp 9 ✦</div><div class="letter-sign-date">📅 Mùa hè 2025 — Ngày chia tay mái trường cấp 2</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOMO CAMERA -->
+<section class="lomo-section" id="lomo">
+  <div class="lomo-bar top" id="lomoBarTop"></div>
+  <div class="lomo-bar bot" id="lomoBarBot"></div>
+  <div class="lomo-inner">
+    <div class="section-heading reveal">
+      <span class="sh-eyebrow">🎞️ Buồng tối kỉ niệm</span>
+      <h2 class="sh-title">Máy Ảnh Lomo</h2>
+      <div class="sh-squiggle"></div>
+    </div>
+    <p class="lomo-sub reveal">Upload ảnh → chọn filter phim cổ → tải về ảnh vintage 🎞️</p>
+    <div class="lomo-drop reveal" id="lomoDrop">
+      <input type="file" id="lomoFile" accept="image/*">
+      <span class="lomo-drop-ico">📷</span>
+      <span class="lomo-drop-ttl">Kéo thả ảnh vào đây hoặc click để chọn</span>
+      <span class="lomo-drop-hint">JPG · PNG · WEBP — ảnh lớp, selfie, kỉ niệm đều được!</span>
+    </div>
+    <div class="lomo-ws" id="lomoWs">
+      <div class="lomo-layout">
+        <div>
+          <div class="lomo-cvs-wrap">
+            <div class="lomo-cvs-tape"></div>
+            <canvas id="lomoCanvas"></canvas>
+            <div class="lomo-cap-bar">
+              <div class="lomo-cap-dot"></div>
+              <input id="lomoCap" placeholder="Ghi chú kỉ niệm... ✏️" maxlength="55">
+            </div>
+          </div>
+          <div class="lomo-strip-scroll"><div class="lomo-strip" id="lomoStrip"></div></div>
+        </div>
+        <div class="lomo-ctrl">
+          <div class="lomo-box">
+            <span class="lomo-box-ttl">🎞 Filter phim</span>
+            <div class="lomo-fgrid" id="lomoFGrid"></div>
+          </div>
+          <div class="lomo-box">
+            <span class="lomo-box-ttl">🎚 Tinh chỉnh</span>
+            <div class="lomo-sl-row"><span class="lomo-sl-lbl">Hạt film</span><input type="range" class="lomo-sl" id="slG" min="0" max="100" value="30"><span class="lomo-sl-val" id="vG">30</span></div>
+            <div class="lomo-sl-row"><span class="lomo-sl-lbl">Vignette</span><input type="range" class="lomo-sl" id="slV" min="0" max="100" value="55"><span class="lomo-sl-val" id="vV">55</span></div>
+            <div class="lomo-sl-row"><span class="lomo-sl-lbl">Fade</span><input type="range" class="lomo-sl" id="slF" min="0" max="80" value="18"><span class="lomo-sl-val" id="vF">18</span></div>
+            <div class="lomo-sl-row"><span class="lomo-sl-lbl">Sáng</span><input type="range" class="lomo-sl" id="slB" min="-80" max="80" value="0"><span class="lomo-sl-val" id="vB">0</span></div>
+            <div class="lomo-sl-row"><span class="lomo-sl-lbl">Màu sắc</span><input type="range" class="lomo-sl" id="slS" min="-80" max="100" value="15"><span class="lomo-sl-val" id="vS">15</span></div>
+          </div>
+          <div class="lomo-box">
+            <span class="lomo-box-ttl">💾 Lưu ảnh</span>
+            <button class="lomo-dl" id="lomoDl">⬇ Tải ảnh về máy</button>
+            <button class="lomo-reset" id="lomoReset">🔄 Chọn ảnh khác</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lb">
-  <span class="lb-close" id="lbClose">✕ Đóng lại</span>
-  <div class="lb-card">
-    <div class="lb-img" id="lbImg"></div>
-    <div class="lb-strip" style="height:4px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep),var(--sage));margin:0 -1.5rem"></div>
-    <p class="lb-cap" id="lbCap"></p>
-  </div>
-</div>
-
-<!-- Footer -->
 <footer>
   <span class="footer-doodle">Cấp 2 — Mãi Mãi Trong Tim ✏️</span>
   <p class="footer-text">Lớp 9 &nbsp;·&nbsp; 2025 – 2026 &nbsp;·&nbsp; Chúng ta đã có một tuổi thơ thật đẹp</p>
@@ -1302,304 +498,964 @@ footer {
 </footer>
 
 <script>
-/* ── CURSOR ── */
-const cEl = document.querySelector('.cursor');
-const tip = cEl.querySelector('.c-tip');
-const trail = cEl.querySelector('.c-trail');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-(function loop(){
-  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-  tip.style.cssText   = `left:${mx}px;top:${my}px`;
-  trail.style.cssText = `left:${rx}px;top:${ry}px`;
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,.polaroid,.cd-card,.tl-body,button').forEach(el => {
-  el.addEventListener('mouseenter', ()=>{ trail.style.width='44px'; trail.style.height='44px'; trail.style.borderColor='rgba(232,133,106,.6)'; });
-  el.addEventListener('mouseleave', ()=>{ trail.style.width='32px'; trail.style.height='32px'; trail.style.borderColor='rgba(232,133,106,.35)'; });
-});
+'use strict';
 
-/* ── COUNTDOWN from graduation day ── */
-const gradDay = new Date('2026-05-31T08:00:00');
-const els = { d:document.getElementById('cd-d'), h:document.getElementById('cd-h'), m:document.getElementById('cd-m'), s:document.getElementById('cd-s') };
-function pad(n,l=2){ return String(Math.abs(n)).padStart(l,'0'); }
-function tick(){
-  const diff = Date.now() - gradDay;
-  const future = diff < 0;
-  const abs = Math.abs(diff);
-  const d = Math.floor(abs/86400000);
-  const h = Math.floor((abs%86400000)/3600000);
-  const m = Math.floor((abs%3600000)/60000);
-  const s = Math.floor((abs%60000)/1000);
-  const doc = document.querySelector('.cd-from');
-  if(doc) doc.textContent = future ? '⏳ Đếm ngược đến lễ bế giảng năm học 2025 - 2026' : '📅 Đã trôi qua kể từ ngày bế giảng';
-  const set = (el,v)=>{
-    if(el.textContent!==v){ el.textContent=v; el.classList.add('tick'); setTimeout(()=>el.classList.remove('tick'),200); }
-  };
-  set(els.d, pad(d,3)); set(els.h, pad(h)); set(els.m, pad(m)); set(els.s, pad(s));
-}
-tick(); setInterval(tick,1000);
-
-/* ── MARQUEE ── */
-const words = ['Lớp 9 ✏️','Năm Cuối Cấp 2','Chia Tay Mái Trường','Kỉ Niệm Không Phai','Class of 2025 🎓','Tuổi Học Trò','Giờ Ra Chơi','Sân Trường Quen','Nhớ Mãi Bạn Bè','Cảm Ơn Thầy Cô'];
-const mq = document.getElementById('mq');
-let h='';
-for(let r=0;r<3;r++) words.forEach(w=>{
-  h+=`<span class="marquee-item">${w}<span class="mq-dot"></span></span>`;
-});
-mq.innerHTML=h;
-
-/* ── SCROLL REVEAL ── */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-},{threshold:.1});
-document.querySelectorAll('.reveal,.tl-row,.polaroid').forEach(el=>obs.observe(el));
-document.querySelectorAll('.polaroid').forEach((p,i)=>{ 
-  p.style.transitionDelay=`${i*.07}s`;
-});
-
-/* ── POLAROID LIGHTBOX ── */
-const data = [
-  ['🏫','Cổng trường quen thuộc — Nơi mỗi sáng chúng ta lại gặp nhau'],
-  ['📚','Tiết học nhớ đời — Có lần cười thì có lần ngủ gật'],
-  ['🍱','Bữa trưa bên nhau — Chia nhau từng miếng cơm, từng câu chuyện'],
-  ['🎭','Buổi văn nghệ — Tập cả tháng, diễn 5 phút, nhớ cả đời'],
-  ['🏕️','Đêm lửa trại — Lần đầu ngủ xa nhà, cùng nhau'],
-  ['🎓','Ngày chia tay lớp 9 — Cuộn phim đẹp nhất của tuổi thơ'],
-];
-const lb=document.getElementById('lb');
-const lbImg=document.getElementById('lbImg');
-const lbCap=document.getElementById('lbCap');
-document.querySelectorAll('.polaroid').forEach((p,i)=>{
-  p.addEventListener('click',()=>{
-    lbImg.innerHTML=`<span style="font-size:5rem">${data[i][0]}</span>`;
-    lbCap.textContent=data[i][1];
-    lb.classList.add('open');
+/* ═══════════════════════════════
+   CURSOR
+═══════════════════════════════ */
+(function(){
+  var cur=document.querySelector('.cursor');
+  if(!cur)return;
+  var tip=cur.querySelector('.c-tip'),trl=cur.querySelector('.c-trail');
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+  (function loop(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    tip.style.cssText='left:'+mx+'px;top:'+my+'px';
+    trl.style.cssText='left:'+rx+'px;top:'+ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,.polaroid,.cd-card,.tl-body,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){trl.style.width='44px';trl.style.height='44px';trl.style.borderColor='rgba(232,133,106,.6)';});
+    el.addEventListener('mouseleave',function(){trl.style.width='32px';trl.style.height='32px';trl.style.borderColor='rgba(232,133,106,.35)';});
   });
-});
-document.getElementById('lbClose').addEventListener('click',()=>lb.classList.remove('open'));
-lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('open'); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+})();
 
-/* ── HERO ANIMATION FIX ── */
-setTimeout(()=>{
-  document.querySelectorAll('.hero-sub').forEach(el=>el.style.opacity=1);
+/* ═══════════════════════════════
+   LOADER
+═══════════════════════════════ */
+(function(){
+  var loader=document.getElementById('loader'),bar=document.getElementById('loaderBar'),p=0;
+  var iv=setInterval(function(){
+    p+=Math.random()*18+5;if(p>=100)p=100;
+    bar.style.width=p+'%';
+    if(p>=100){clearInterval(iv);setTimeout(function(){loader.classList.add('hide');},300);}
+  },80);
+})();
+
+/* ═══════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════ */
+window.addEventListener('scroll',function(){
+  var pb=document.getElementById('progress-bar');
+  var tot=document.documentElement.scrollHeight-window.innerHeight;
+  pb.style.width=(tot>0?(window.scrollY/tot*100):0)+'%';
+});
+
+/* ═══════════════════════════════
+   HAMBURGER
+═══════════════════════════════ */
+var hamburger=document.getElementById('hamburger');
+var mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',function(){
+  hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');
+});
+function closeMobileMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');}
+document.addEventListener('click',function(e){
+  if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMobileMenu();
+});
+
+/* ═══════════════════════════════
+   MARQUEE
+═══════════════════════════════ */
+(function(){
+  var words=['Lớp 9 ✏️','Năm Cuối Cấp 2','Chia Tay Mái Trường','Kỉ Niệm Không Phai',
+             'Class of 2025 🎓','Tuổi Học Trò','Giờ Ra Chơi','Sân Trường Quen',
+             'Nhớ Mãi Bạn Bè','Cảm Ơn Thầy Cô'];
+  var mq=document.getElementById('mq'),h='';
+  for(var r=0;r<3;r++)words.forEach(function(w){
+    h+='<span class="marquee-item">'+w+'<span class="mq-dot"></span></span>';
+  });
+  mq.innerHTML=h;
+})();
+
+/* ═══════════════════════════════
+   COUNTDOWN
+═══════════════════════════════ */
+(function(){
+  var gradDay=new Date('2026-05-31T08:00:00');
+  var elD=document.getElementById('cd-d'),elH=document.getElementById('cd-h'),
+      elM=document.getElementById('cd-m'),elS=document.getElementById('cd-s');
+  function pad(n,l){return String(Math.abs(n)).padStart(l||2,'0');}
+  function tick(){
+    var diff=Date.now()-gradDay.getTime();
+    var abs=Math.abs(diff);
+    var d=Math.floor(abs/86400000),h=Math.floor(abs%86400000/3600000),
+        m=Math.floor(abs%3600000/60000),s=Math.floor(abs%60000/1000);
+    var from=document.querySelector('.cd-from');
+    if(from)from.textContent=diff<0?'⏳ Đếm ngược đến lễ bế giảng năm học 2025–2026'
+                                   :'📅 Đã trôi qua kể từ ngày bế giảng';
+    function set(el,v){if(el.textContent!==v){el.textContent=v;el.classList.add('tick');setTimeout(function(){el.classList.remove('tick');},200);}}
+    set(elD,pad(d,3));set(elH,pad(h));set(elM,pad(m));set(elS,pad(s));
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* ═══════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════ */
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal,.tl-row,.polaroid').forEach(function(el){obs.observe(el);});
+  document.querySelectorAll('.polaroid').forEach(function(p,i){p.style.transitionDelay=(i*.07)+'s';});
+})();
+setTimeout(function(){
+  document.querySelectorAll('.hero-sub').forEach(function(el){el.style.opacity=1;});
 },2000);
 
-/* ── TILT EFFECT on polaroids ── */
-document.querySelectorAll('.polaroid').forEach(card=>{
-  card.addEventListener('mousemove', e=>{
-    const r=card.getBoundingClientRect();
-    const cx=(e.clientX-r.left)/r.width-.5;
-    const cy=(e.clientY-r.top)/r.height-.5;
-    card.style.transform=`rotate(0deg) scale(1.04) translateY(-6px) perspective(600px) rotateY(${cx*8}deg) rotateX(${-cy*8}deg)`;
+/* ─── POLAROID TILT ─── */
+document.querySelectorAll('.polaroid').forEach(function(card){
+  var rots=[-2.5,1.2,-1,2.1,-.8,1.8];
+  var idx=[].indexOf.call(card.parentNode.children,card);
+  card.addEventListener('mousemove',function(e){
+    var r=card.getBoundingClientRect();
+    var cx=(e.clientX-r.left)/r.width-.5,cy=(e.clientY-r.top)/r.height-.5;
+    card.style.transform='rotate(0deg) scale(1.04) translateY(-6px) perspective(600px) rotateY('+(cx*8)+'deg) rotateX('+(-cy*8)+'deg)';
   });
-  card.addEventListener('mouseleave',()=>{
-    const idx=[...card.parentNode.children].indexOf(card);
-    const rots=[-2.5,1.2,-1,2.1,-.8,1.8];
-    card.style.transform=`rotate(${rots[idx]||0}deg)`;
-  });
+  card.addEventListener('mouseleave',function(){card.style.transform='rotate('+(rots[idx]||0)+'deg)';});
 });
 
-/* ── LOADING SCREEN ── */
-const loader = document.getElementById('loader');
-const loaderBar = document.getElementById('loaderBar');
-const tips = ['Đang mở cuốn sách kỉ niệm ✨','Lật từng trang nhật ký 📖','Pha cà phê, ngồi nhớ lại 🍵','Chuẩn bị khăn lau nước mắt 🥹'];
-let progress = 0;
-const loadInterval = setInterval(()=>{
-  progress += Math.random() * 18 + 5;
-  if(progress >= 100){ progress = 100; clearInterval(loadInterval); }
-  loaderBar.style.width = progress + '%';
-  if(progress >= 100){
-    setTimeout(()=>{ loader.classList.add('hide'); }, 300);
-  }
-}, 80);
-
-/* ── PROGRESS BAR ── */
-const progressBar = document.getElementById('progress-bar');
-window.addEventListener('scroll', ()=>{
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = (window.scrollY / total) * 100;
-  progressBar.style.width = pct + '%';
-});
-
-/* ── HAMBURGER MENU ── */
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', ()=>{
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-});
-function closeMobileMenu(){
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-}
-// Đóng menu khi click ra ngoài
-document.addEventListener('click', e=>{
-  if(!hamburger.contains(e.target) && !mobileMenu.contains(e.target)){
-    closeMobileMenu();
-  }
-});
-
-/* ════════════════════════════════════════
-   🎵 MUSIC PLAYER LOGIC
-════════════════════════════════════════ */
+/* ─── LIGHTBOX ─── */
 (function(){
-  const tracks = [
-    { audio: document.getElementById('audio1'), name: '🎵 Nhạc kỉ niệm 1' },
-    { audio: document.getElementById('audio2'), name: '🎵 Nhạc kỉ niệm 2' },
+  var data=[
+    ['🏫','Cổng trường quen thuộc — Nơi mỗi sáng chúng ta lại gặp nhau'],
+    ['📚','Tiết học nhớ đời — Có lần cười thì có lần ngủ gật'],
+    ['🍱','Bữa trưa bên nhau — Chia nhau từng miếng cơm'],
+    ['🎭','Buổi văn nghệ — Tập cả tháng, diễn 5 phút, nhớ cả đời'],
+    ['🏕️','Đêm lửa trại — Lần đầu ngủ xa nhà, cùng nhau'],
+    ['🎓','Ngày chia tay lớp 9 — Cuộn phim đẹp nhất của tuổi thơ']
   ];
-
-  let current = 0;
-  let playing = false;
-
-  const mpToggle   = document.getElementById('mpToggle');
-  const mpCard     = document.getElementById('mpCard');
-  const mpPlay     = document.getElementById('mpPlay');
-  const mpPrev     = document.getElementById('mpPrev');
-  const mpNext     = document.getElementById('mpNext');
-  const mpSong     = document.getElementById('mpSong');
-  const mpFill     = document.getElementById('mpFill');
-  const mpVol      = document.getElementById('mpVol');
-  const mpWave     = document.getElementById('mpWave');
-  const mpDots     = document.querySelectorAll('.mp-dot');
-  const mpPlayer   = document.getElementById('musicPlayer');
-
-  let cardVisible = true;
-  let hasInteracted = false;
-
-  // ── Hiện card ngay từ đầu ──
-  mpCard.style.display = 'block';
-
-  // ── Tự phát nhạc ngay khi trang load (thử trước) ──
-  window.addEventListener('load', ()=>{
-    currentAudio().play().then(()=>{
-      playing = true;
-      hasInteracted = true;
-      updateUI();
-      spawnNote();
-    }).catch(()=>{
-      // Trình duyệt chặn autoplay → đợi lần click đầu tiên
-      updateUI();
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+  document.querySelectorAll('.polaroid').forEach(function(p,i){
+    p.addEventListener('click',function(e){
+      /* Không mở lightbox nếu click vào nút tải */
+      if(e.target.classList.contains('po-dl'))return;
+      lbImg.innerHTML='<span style="font-size:5rem">'+data[i][0]+'</span>';
+      lbCap.textContent=data[i][1];
+      lb.classList.add('open');
     });
   });
+  document.getElementById('lbClose').addEventListener('click',function(){lb.classList.remove('open');});
+  lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open');});
+})();
 
-  // ── Nếu autoplay bị chặn → phát khi người dùng click lần đầu bất kỳ đâu ──
-  function onFirstInteract(){
-    if(hasInteracted) return;
-    hasInteracted = true;
-    document.removeEventListener('click', onFirstInteract);
-    document.removeEventListener('touchstart', onFirstInteract);
-    if(!playing){
-      currentAudio().play().then(()=>{ playing=true; updateUI(); spawnNote(); }).catch(()=>{});
+/* ─── DOWNLOAD POLAROID ─────────────────────────────────────────────────────
+   downloadPolaroid(btn):
+     1. Tìm .polaroid cha chứa nút
+     2. Dùng canvas để vẽ lại polaroid:
+        - Nền trắng (toàn card)
+        - Vùng ảnh: nếu có <img> thật (loaded) → vẽ ảnh thật;
+                    nếu không → vẽ gradient + emoji
+        - Dải màu (rainbow strip)
+        - Chú thích (caption)
+     3. Download JPEG
+   ─────────────────────────────────────────────────────────────────────────── */
+function downloadPolaroid(btn){
+  var card = btn.closest('.polaroid');
+  if(!card)return;
+
+  /* Feedback: đổi label nút khi đang render */
+  btn.classList.add('busy');
+  var origText = btn.textContent;
+  btn.textContent = '⏳';
+
+  /* Kích thước canvas (px) — bắt chước tỉ lệ polaroid thật */
+  var SIZE   = 520;   /* tổng chiều rộng */
+  var PAD    = 16;    /* padding trái-phải-trên */
+  var IMGW   = SIZE - PAD*2;
+  var IMGH   = IMGW;  /* aspect-ratio 1:1 */
+  var STRIPH = 6;
+  var CAPH   = 54;    /* vùng caption bên dưới */
+  var TOTAL  = PAD + IMGH + STRIPH + CAPH + PAD;
+
+  var cv = document.createElement('canvas');
+  cv.width  = SIZE;
+  cv.height = TOTAL;
+  var ctx = cv.getContext('2d');
+
+  /* 1. Nền trắng toàn card */
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, SIZE, TOTAL);
+
+  /* 2. Vùng ảnh */
+  var imgEl = card.querySelector('.polaroid-img img');
+  var hasRealImg = imgEl && imgEl.complete && imgEl.naturalWidth > 0 && imgEl.src && !imgEl.src.endsWith('c.jpg') || (imgEl && imgEl.complete && imgEl.naturalWidth > 0 && imgEl.getAttribute('onerror') === null);
+
+  /* Safer check: image is loaded and not broken */
+  hasRealImg = imgEl && imgEl.complete && imgEl.naturalWidth > 0 && imgEl.style.display !== 'none';
+
+  function drawCapAndDownload(){
+    /* 3. Rainbow strip */
+    var grad = ctx.createLinearGradient(PAD, 0, PAD+IMGW, 0);
+    grad.addColorStop(0,   '#e8856a');
+    grad.addColorStop(0.33,'#f5c842');
+    grad.addColorStop(0.66,'#6db4d4');
+    grad.addColorStop(1,   '#8fbc8f');
+    ctx.fillStyle = grad;
+    ctx.fillRect(PAD, PAD + IMGH, IMGW, STRIPH);
+
+    /* 4. Caption text */
+    var capEl = card.querySelector('.polaroid-caption');
+    var capText = capEl ? capEl.textContent.trim() : '';
+    if(capText){
+      ctx.fillStyle = '#4a3728';
+      ctx.font = 'bold 22px Caveat, cursive, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(capText, SIZE/2, PAD + IMGH + STRIPH + CAPH/2);
+    }
+
+    /* 5. Download */
+    var filename = (capText || 'ky-niem').replace(/[^\w\sÀ-ɏḀ-ỿ]/gu,'').trim().replace(/\s+/g,'-') || 'polaroid';
+    var a = document.createElement('a');
+    a.download = filename + '.jpg';
+    a.href = cv.toDataURL('image/jpeg', 0.94);
+    a.click();
+
+    /* Khôi phục nút */
+    btn.textContent = origText;
+    btn.classList.remove('busy');
+  }
+
+  if(hasRealImg){
+    /* Vẽ ảnh thật */
+    var tmp = new Image();
+    tmp.crossOrigin = 'anonymous';
+    tmp.onload = function(){
+      ctx.drawImage(tmp, PAD, PAD, IMGW, IMGH);
+      drawCapAndDownload();
+    };
+    tmp.onerror = function(){
+      /* Fallback nếu ảnh không load được */
+      drawPlaceholder();
+      drawCapAndDownload();
+    };
+    tmp.src = imgEl.src;
+  } else {
+    drawPlaceholder();
+    drawCapAndDownload();
+  }
+
+  /* Vẽ placeholder: gradient + emoji */
+  function drawPlaceholder(){
+    /* Lấy màu gradient từ inline style của .polaroid-img */
+    var imgDiv = card.querySelector('.polaroid-img');
+    var bgStyle = imgDiv ? imgDiv.style.background || imgDiv.style.backgroundImage : '';
+    /* Parse 2 màu từ gradient string: "linear-gradient(135deg, #c8e8f5, #dff2fa)" */
+    var colors = bgStyle.match(/#[0-9a-fA-F]{3,6}/g) || ['#a8d8ea','#fdf0d5'];
+    var grad2 = ctx.createLinearGradient(PAD, PAD, PAD+IMGW, PAD+IMGH);
+    grad2.addColorStop(0, colors[0]);
+    grad2.addColorStop(1, colors[1] || colors[0]);
+    ctx.fillStyle = grad2;
+    ctx.fillRect(PAD, PAD, IMGW, IMGH);
+
+    /* Emoji */
+    var iconEl = card.querySelector('.po-icon');
+    var emoji = iconEl ? iconEl.textContent : '📷';
+    ctx.font = Math.round(IMGW * 0.22) + 'px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.globalAlpha = 0.6;
+    ctx.fillText(emoji, SIZE/2, PAD + IMGH/2 - 10);
+    ctx.globalAlpha = 1;
+
+    /* Placeholder text */
+    var phEl = card.querySelector('.po-placeholder');
+    if(phEl){
+      ctx.fillStyle = 'rgba(44,31,20,0.3)';
+      ctx.font = Math.round(IMGW * 0.045) + 'px Caveat, cursive, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(phEl.textContent, SIZE/2, PAD + IMGH/2 + Math.round(IMGW*0.15));
     }
   }
-  document.addEventListener('click', onFirstInteract);
-  document.addEventListener('touchstart', onFirstInteract);
+}
 
-  // ── Show / hide card ──
-  mpToggle.addEventListener('click', (e)=>{
-    e.stopPropagation(); // không trigger onFirstInteract 2 lần
-    cardVisible = !cardVisible;
-    mpCard.style.display = cardVisible ? 'block' : 'none';
+/* ═══════════════════════════════
+   MUSIC PLAYER
+═══════════════════════════════ */
+(function(){
+  var tracks=[
+    {audio:document.getElementById('a1'),name:'🎵 Nhạc kỉ niệm 1'},
+    {audio:document.getElementById('a2'),name:'🎵 Nhạc kỉ niệm 2'},
+  ];
+  var cur=0,playing=false,interacted=false;
+  var mpCard  =document.getElementById('mpCard');
+  var mpPlay  =document.getElementById('mpPlay');
+  var mpPrev  =document.getElementById('mpPrev');
+  var mpNext  =document.getElementById('mpNext');
+  var mpSong  =document.getElementById('mpSong');
+  var mpFill  =document.getElementById('mpFill');
+  var mpVol   =document.getElementById('mpVol');
+  var mpWave  =document.getElementById('mpWave');
+  var mpDotsEl=document.getElementById('mpDots');
+  var mpToggle=document.getElementById('mpToggle');
+  var cardVisible=true;
+  mpCard.style.display='block';
+
+  tracks.forEach(function(_,i){
+    var d=document.createElement('div');
+    d.className='mp-dot-el'+(i===0?' active':'');
+    d.addEventListener('click',function(e){e.stopImmediatePropagation();if(i!==cur)switchTo(i);});
+    mpDotsEl.appendChild(d);
   });
 
-  // ── Helpers ──
-  function currentAudio(){ return tracks[current].audio; }
-
+  function getAudio(){return tracks[cur].audio;}
   function updateUI(){
-    mpSong.textContent = tracks[current].name;
-    mpPlay.textContent = playing ? '⏸' : '▶️';
-    mpWave.classList.toggle('paused', !playing);
-    mpDots.forEach((d,i)=>{
-      d.classList.toggle('active', i===current);
-    });
-    // set volume
-    tracks.forEach(t=>{ t.audio.volume = parseFloat(mpVol.value); });
+    mpSong.textContent=tracks[cur].name;
+    mpPlay.textContent=playing?'⏸':'▶️';
+    mpWave.classList.toggle('paused',!playing);
+    mpDotsEl.querySelectorAll('.mp-dot-el').forEach(function(d,i){d.classList.toggle('active',i===cur);});
+    tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});
   }
-
-  function startPlay(){
-    currentAudio().currentTime = 0;
-    currentAudio().play().then(()=>{
-      playing = true;
-      updateUI();
-      spawnNote();
-    }).catch(()=>{});
+  function stopAll(){tracks.forEach(function(t){t.audio.pause();t.audio.currentTime=0;});}
+  function doPlay(){
+    getAudio().play().then(function(){playing=true;interacted=true;updateUI();schedNote();}).catch(function(){});
   }
+  function switchTo(i){stopAll();cur=i;if(playing)doPlay();else updateUI();}
 
-  function stopAll(){
-    tracks.forEach(t=>{ t.audio.pause(); t.audio.currentTime=0; });
+  window.addEventListener('load',function(){
+    getAudio().play().then(function(){playing=true;interacted=true;updateUI();schedNote();}).catch(function(){updateUI();});
+  });
+  function onFirst(){
+    if(interacted)return;interacted=true;
+    document.removeEventListener('click',onFirst,true);document.removeEventListener('touchstart',onFirst,true);
+    if(!playing)doPlay();
   }
+  document.addEventListener('click',onFirst,true);document.addEventListener('touchstart',onFirst,true);
 
-  function switchTo(idx){
-    stopAll();
-    current = idx;
-    if(playing) startPlay();
-    else updateUI();
+  mpToggle.addEventListener('click',function(e){e.stopImmediatePropagation();cardVisible=!cardVisible;mpCard.style.display=cardVisible?'block':'none';});
+  mpPlay.addEventListener('click',function(e){e.stopImmediatePropagation();if(playing){getAudio().pause();playing=false;updateUI();}else doPlay();});
+  mpPrev.addEventListener('click',function(e){e.stopImmediatePropagation();switchTo((cur-1+tracks.length)%tracks.length);});
+  mpNext.addEventListener('click',function(e){e.stopImmediatePropagation();switchTo((cur+1)%tracks.length);});
+  mpVol.addEventListener('input',function(){tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});});
+  tracks.forEach(function(t,i){
+    t.audio.addEventListener('ended',function(){cur=(i+1)%tracks.length;doPlay();});
+    t.audio.addEventListener('timeupdate',function(){if(i===cur&&t.audio.duration)mpFill.style.width=(t.audio.currentTime/t.audio.duration*100)+'%';});
+  });
+  tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});
+
+  function schedNote(){
+    if(!playing)return;
+    var notes=['🎵','🎶','♪','♫'];
+    var n=document.createElement('span');n.className='mp-note';
+    n.textContent=notes[Math.floor(Math.random()*notes.length)];
+    n.style.left=(20+Math.random()*60)+'%';n.style.bottom='105%';
+    mpCard.appendChild(n);setTimeout(function(){n.remove();},2000);
+    if(playing)setTimeout(schedNote,3500+Math.random()*2000);
   }
-
-  // ── Play / Pause ──
-  mpPlay.addEventListener('click', ()=>{
-    if(playing){
-      currentAudio().pause();
-      playing = false;
-      updateUI();
-    } else {
-      currentAudio().play().then(()=>{ playing=true; updateUI(); spawnNote(); }).catch(()=>{});
-    }
-  });
-
-  // ── Prev / Next ──
-  mpPrev.addEventListener('click', ()=>{
-    switchTo((current - 1 + tracks.length) % tracks.length);
-  });
-  mpNext.addEventListener('click', ()=>{
-    switchTo((current + 1) % tracks.length);
-  });
-
-  // ── Track dot click ──
-  mpDots.forEach((d,i)=>{
-    d.addEventListener('click', ()=>{ if(i!==current) switchTo(i); });
-  });
-
-  // ── When a track ends → play next (loop playlist) ──
-  tracks.forEach((t, i)=>{
-    t.audio.addEventListener('ended', ()=>{
-      current = (i + 1) % tracks.length;
-      startPlay();
-    });
-    t.audio.addEventListener('timeupdate', ()=>{
-      if(i===current && t.audio.duration){
-        mpFill.style.width = (t.audio.currentTime / t.audio.duration * 100) + '%';
-      }
-    });
-  });
-
-  // ── Volume ──
-  mpVol.addEventListener('input', ()=>{
-    tracks.forEach(t=>{ t.audio.volume = parseFloat(mpVol.value); });
-  });
-  // init volume
-  tracks.forEach(t=>{ t.audio.volume = parseFloat(mpVol.value); });
-
-  // ── Floating note effect ──
-  function spawnNote(){
-    if(!playing) return;
-    const notes = ['🎵','🎶','♪','♫','🎼'];
-    const n = document.createElement('span');
-    n.className = 'mp-note';
-    n.textContent = notes[Math.floor(Math.random()*notes.length)];
-    n.style.left  = (20 + Math.random()*60) + '%';
-    n.style.bottom = '110%';
-    mpPlayer.style.position = 'fixed'; // ensure parent is positioned
-    mpCard.appendChild(n);
-    setTimeout(()=>n.remove(), 2000);
-    if(playing) setTimeout(spawnNote, 3000 + Math.random()*2000);
-  }
-
   updateUI();
 })();
+
+/* ═══════════════════════════════
+   LOMO CAMERA
+═══════════════════════════════ */
+(function(){
+  function fillBar(id){
+    var el=document.getElementById(id);if(!el)return;
+    var f=document.createDocumentFragment();
+    for(var i=0;i<100;i++){var h=document.createElement('div');h.className='lomo-hole';f.appendChild(h);}
+    el.appendChild(f);
+  }
+  fillBar('lomoBarTop');fillBar('lomoBarBot');
+
+  var P=[
+    {name:'Gốc',       e:'🌟',rM:1,    gM:1,    bM:1,    rA:0,  gA:0,  bA:0,  sat:0,   br:0,   fade:0,   grain:0,   vig:0,   leak:null},
+    {name:'Lomo LC-A', e:'🔴',rM:1.18, gM:0.84, bM:0.76, rA:6,  gA:-6, bA:-10,sat:.24, br:-8,  fade:.12, grain:.30, vig:.72, leak:[255,70,15,.12]},
+    {name:'Kodak 400', e:'🟡',rM:1.06, gM:1.01, bM:0.87, rA:8,  gA:4,  bA:-4, sat:.10, br:10,  fade:.20, grain:.18, vig:.40, leak:null},
+    {name:'Fuji Velvia',e:'🟢',rM:0.91,gM:1.14, bM:0.93, rA:-4, gA:6,  bA:2,  sat:.40, br:4,   fade:.06, grain:.12, vig:.45, leak:null},
+    {name:'Cross-Pro', e:'💜',rM:1.12, gM:0.81, bM:1.18, rA:6,  gA:-8, bA:10, sat:.28, br:-10, fade:.10, grain:.32, vig:.62, leak:null},
+    {name:'Polaroid',  e:'⬜',rM:1.00, gM:1.02, bM:1.09, rA:2,  gA:2,  bA:8,  sat:-.08,br:14,  fade:.32, grain:.15, vig:.28, leak:null},
+    {name:'Noir 1970', e:'⬛',rM:1,    gM:1,    bM:1,    rA:0,  gA:0,  bA:0,  sat:-1,  br:-12, fade:.08, grain:.50, vig:.78, leak:null},
+    {name:'Cinestill', e:'🟠',rM:1.22, gM:0.87, bM:0.71, rA:10, gA:-4, bA:-10,sat:.20, br:0,   fade:.15, grain:.40, vig:.55, leak:[255,55,8,.10]},
+    {name:'Expired',   e:'🟤',rM:1.04, gM:0.93, bM:0.72, rA:4,  gA:-2, bA:-12,sat:.14, br:-6,  fade:.28, grain:.55, vig:.38, leak:[190,110,0,.08]},
+  ];
+
+  var canvas =document.getElementById('lomoCanvas');
+  var ctx    =canvas.getContext('2d');
+  var capEl  =document.getElementById('lomoCap');
+  var dropEl =document.getElementById('lomoDrop');
+  var fileEl =document.getElementById('lomoFile');
+  var wsEl   =document.getElementById('lomoWs');
+  var stripEl=document.getElementById('lomoStrip');
+  var fgEl   =document.getElementById('lomoFGrid');
+  var dlBtn  =document.getElementById('lomoDl');
+  var rstBtn =document.getElementById('lomoReset');
+
+  var SL={
+    G:{sl:document.getElementById('slG'),vl:document.getElementById('vG')},
+    V:{sl:document.getElementById('slV'),vl:document.getElementById('vV')},
+    F:{sl:document.getElementById('slF'),vl:document.getElementById('vF')},
+    B:{sl:document.getElementById('slB'),vl:document.getElementById('vB')},
+    S:{sl:document.getElementById('slS'),vl:document.getElementById('vS')},
+  };
+
+  var srcImg=null,curP=0,MAX=900;
+
+  P.forEach(function(p,i){
+    var btn=document.createElement('button');
+    btn.className='lomo-fbtn'+(i===0?' on':'');
+    btn.innerHTML='<span>'+p.e+'</span>'+p.name;
+    btn.addEventListener('click',function(){selectPreset(i);});
+    fgEl.appendChild(btn);
+  });
+
+  function selectPreset(i){
+    curP=i;
+    fgEl.querySelectorAll('.lomo-fbtn').forEach(function(b,j){b.classList.toggle('on',j===i);});
+    stripEl.querySelectorAll('.lomo-sitem').forEach(function(s,j){s.classList.toggle('on',j===i);});
+    var p=P[i];
+    setSL('G',Math.round(p.grain*100));setSL('V',Math.round(p.vig*100));
+    setSL('F',Math.round(p.fade*100));setSL('B',p.br);setSL('S',Math.round(p.sat*100));
+    render();
+  }
+  function setSL(k,v){SL[k].sl.value=v;SL[k].vl.textContent=v;}
+  function getSL(k){return parseFloat(SL[k].sl.value);}
+
+  Object.keys(SL).forEach(function(k){
+    SL[k].sl.addEventListener('input',function(){SL[k].vl.textContent=SL[k].sl.value;render();});
+  });
+  capEl.addEventListener('input',render);
+
+  dropEl.addEventListener('click',function(){fileEl.click();});
+  fileEl.addEventListener('change',function(e){if(e.target.files[0])lomoLoad(e.target.files[0]);});
+  dropEl.addEventListener('dragover',function(e){e.preventDefault();dropEl.classList.add('over');});
+  dropEl.addEventListener('dragleave',function(){dropEl.classList.remove('over');});
+  dropEl.addEventListener('drop',function(e){
+    e.preventDefault();dropEl.classList.remove('over');
+    var f=e.dataTransfer.files[0];
+    if(f&&f.type.startsWith('image/'))lomoLoad(f);
+  });
+
+  function lomoLoad(file){
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      var img=new Image();
+      img.onload=function(){
+        srcImg=img;
+        var scale=Math.min(1,MAX/Math.max(img.width,img.height));
+        canvas.width=Math.round(img.width*scale);
+        canvas.height=Math.round(img.height*scale);
+        dropEl.style.display='none';
+        wsEl.classList.add('on');
+        buildStrip();selectPreset(0);
+      };
+      img.onerror=function(){alert('Không đọc được ảnh, thử file khác!');};
+      img.src=ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function render(){
+    if(!srcImg)return;
+    var W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);ctx.drawImage(srcImg,0,0,W,H);
+    var p=P[curP];
+    var grain=getSL('G')/100,vig=getSL('V')/100,fade=getSL('F')/100,
+        bright=getSL('B'),sat=getSL('S')/100;
+    var id=ctx.getImageData(0,0,W,H),d=id.data;
+    for(var i=0;i<d.length;i+=4){
+      var r=d[i]*p.rM+p.rA+bright;
+      var g=d[i+1]*p.gM+p.gA+bright;
+      var b=d[i+2]*p.bM+p.bA+bright;
+      if(sat!==0){var lum=0.299*r+0.587*g+0.114*b;r=lum+(r-lum)*(1+sat);g=lum+(g-lum)*(1+sat);b=lum+(b-lum)*(1+sat);}
+      if(fade>0){var lift=fade*42;r+=lift*(1-r/255);g+=lift*(1-g/255);b+=lift*(1-b/255);}
+      if(grain>0){var noise=(Math.random()-.5)*grain*75;r+=noise;g+=noise;b+=noise;}
+      d[i]=r<0?0:r>255?255:r;d[i+1]=g<0?0:g>255?255:g;d[i+2]=b<0?0:b>255?255:b;
+    }
+    ctx.putImageData(id,0,0);
+    if(vig>0){
+      var cx=W/2,cy=H/2,outerR=Math.sqrt(cx*cx+cy*cy)*1.12,innerR=outerR*(1-vig*0.62);
+      var vg=ctx.createRadialGradient(cx,cy,innerR<0?0:innerR,cx,cy,outerR);
+      vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,'+Math.min(0.92,vig*0.9)+')');
+      ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+    }
+    if(p.leak){
+      var lr=p.leak[0],lg=p.leak[1],lb2=p.leak[2],la=p.leak[3];
+      var lkG=ctx.createRadialGradient(0,0,0,0,0,W*0.55);
+      lkG.addColorStop(0,'rgba('+lr+','+lg+','+lb2+','+la+')');
+      lkG.addColorStop(1,'rgba('+lr+','+lg+','+lb2+',0)');
+      ctx.fillStyle=lkG;ctx.fillRect(0,0,W,H);
+    }
+    var cap=capEl.value.trim();
+    if(cap){
+      var fs=Math.max(14,Math.round(W*0.043));
+      ctx.fillStyle='rgba(0,0,0,0.48)';ctx.fillRect(0,H-fs*2.3,W,fs*2.3);
+      ctx.fillStyle='rgba(254,249,240,0.8)';ctx.font=fs+'px Caveat, cursive';
+      ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(cap,W/2,H-fs*1.1);
+    }
+  }
+
+  function buildStrip(){
+    stripEl.innerHTML='';
+    var TH=60,TW=Math.round(TH*(canvas.width/canvas.height));
+    P.forEach(function(p,i){
+      var tc=document.createElement('canvas');tc.width=TW;tc.height=TH;
+      var tx=tc.getContext('2d');tx.drawImage(srcImg,0,0,TW,TH);
+      var id2=tx.getImageData(0,0,TW,TH),d2=id2.data;
+      for(var j=0;j<d2.length;j+=4){
+        var r=d2[j]*p.rM+p.rA+p.br,g=d2[j+1]*p.gM+p.gA+p.br,b=d2[j+2]*p.bM+p.bA+p.br;
+        if(p.sat!==0){var lum=0.299*r+0.587*g+0.114*b;r=lum+(r-lum)*(1+p.sat);g=lum+(g-lum)*(1+p.sat);b=lum+(b-lum)*(1+p.sat);}
+        if(p.fade>0){var lift=p.fade*42;r+=lift*(1-r/255);g+=lift*(1-g/255);b+=lift*(1-b/255);}
+        d2[j]=r<0?0:r>255?255:r;d2[j+1]=g<0?0:g>255?255:g;d2[j+2]=b<0?0:b>255?255:b;
+      }
+      tx.putImageData(id2,0,0);
+      if(p.vig>0){
+        var cx2=TW/2,cy2=TH/2,outerR2=Math.sqrt(cx2*cx2+cy2*cy2)*1.12,innerR2=outerR2*(1-p.vig*.62);
+        var vg2=tx.createRadialGradient(cx2,cy2,innerR2<0?0:innerR2,cx2,cy2,outerR2);
+        vg2.addColorStop(0,'rgba(0,0,0,0)');vg2.addColorStop(1,'rgba(0,0,0,'+Math.min(.92,p.vig*.9)+')');
+        tx.fillStyle=vg2;tx.fillRect(0,0,TW,TH);
+      }
+      var item=document.createElement('div');item.className='lomo-sitem'+(i===0?' on':'');
+      item.appendChild(tc);
+      var lbl=document.createElement('span');lbl.className='lomo-sname';lbl.textContent=p.e+' '+p.name;
+      item.appendChild(lbl);
+      item.addEventListener('click',(function(idx){return function(){selectPreset(idx);};})(i));
+      stripEl.appendChild(item);
+    });
+  }
+
+  dlBtn.addEventListener('click',function(){
+    render();
+    var a=document.createElement('a');
+    var fname=(capEl.value.trim()||'lomo-ky-niem')+'-'+P[curP].name;
+    a.download=fname.replace(/\s+/g,'-')+'.jpg';
+    a.href=canvas.toDataURL('image/jpeg',0.93);
+    a.click();
+  });
+
+  rstBtn.addEventListener('click',function(){
+    srcImg=null;wsEl.classList.remove('on');dropEl.style.display='';
+    fileEl.value='';capEl.value='';stripEl.innerHTML='';
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+  });
+
+})(); /* end LOMO */
+</script>
+</body>
+</html><!-- LIGHTBOX -->
+<div class="lightbox" id="lb">
+  <span class="lb-close" id="lbClose">✕ Đóng lại</span>
+  <div class="lb-card">
+    <div class="lb-img" id="lbImg"></div>
+    <div style="height:4px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep),var(--sage));margin:0 -1.5rem"></div>
+    <p class="lb-cap" id="lbCap"></p>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-doodle">Cấp 2 — Mãi Mãi Trong Tim ✏️</span>
+  <p class="footer-text">Lớp 9 &nbsp;·&nbsp; 2025 – 2026 &nbsp;·&nbsp; Chúng ta đã có một tuổi thơ thật đẹp</p>
+  <span class="footer-hearts">🌻 ⭐ 💛 ⭐ 🌻</span>
+</footer>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════════
+   CURSOR
+═══════════════════════════════ */
+(function(){
+  var cur=document.querySelector('.cursor');
+  if(!cur)return;
+  var tip=cur.querySelector('.c-tip'),trl=cur.querySelector('.c-trail');
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+  (function loop(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    tip.style.cssText='left:'+mx+'px;top:'+my+'px';
+    trl.style.cssText='left:'+rx+'px;top:'+ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,.polaroid,.cd-card,.tl-body,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){trl.style.width='44px';trl.style.height='44px';trl.style.borderColor='rgba(232,133,106,.6)';});
+    el.addEventListener('mouseleave',function(){trl.style.width='32px';trl.style.height='32px';trl.style.borderColor='rgba(232,133,106,.35)';});
+  });
+})();
+
+/* ═══════════════════════════════
+   LOADER
+═══════════════════════════════ */
+(function(){
+  var loader=document.getElementById('loader'),bar=document.getElementById('loaderBar'),p=0;
+  var iv=setInterval(function(){
+    p+=Math.random()*18+5;if(p>=100)p=100;
+    bar.style.width=p+'%';
+    if(p>=100){clearInterval(iv);setTimeout(function(){loader.classList.add('hide');},300);}
+  },80);
+})();
+
+/* ═══════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════ */
+window.addEventListener('scroll',function(){
+  var pb=document.getElementById('progress-bar');
+  var tot=document.documentElement.scrollHeight-window.innerHeight;
+  pb.style.width=(tot>0?(window.scrollY/tot*100):0)+'%';
+});
+
+/* ═══════════════════════════════
+   HAMBURGER
+═══════════════════════════════ */
+var hamburger=document.getElementById('hamburger');
+var mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',function(){
+  hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');
+});
+function closeMobileMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');}
+document.addEventListener('click',function(e){
+  if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMobileMenu();
+});
+
+/* ═══════════════════════════════
+   MARQUEE
+═══════════════════════════════ */
+(function(){
+  var words=['Lớp 9 ✏️','Năm Cuối Cấp 2','Chia Tay Mái Trường','Kỉ Niệm Không Phai',
+             'Class of 2025 🎓','Tuổi Học Trò','Giờ Ra Chơi','Sân Trường Quen',
+             'Nhớ Mãi Bạn Bè','Cảm Ơn Thầy Cô'];
+  var mq=document.getElementById('mq'),h='';
+  for(var r=0;r<3;r++)words.forEach(function(w){
+    h+='<span class="marquee-item">'+w+'<span class="mq-dot"></span></span>';
+  });
+  mq.innerHTML=h;
+})();
+
+/* ═══════════════════════════════
+   COUNTDOWN
+═══════════════════════════════ */
+(function(){
+  var gradDay=new Date('2026-05-31T08:00:00');
+  var elD=document.getElementById('cd-d'),elH=document.getElementById('cd-h'),
+      elM=document.getElementById('cd-m'),elS=document.getElementById('cd-s');
+  function pad(n,l){return String(Math.abs(n)).padStart(l||2,'0');}
+  function tick(){
+    var diff=Date.now()-gradDay.getTime();
+    var abs=Math.abs(diff);
+    var d=Math.floor(abs/86400000),h=Math.floor(abs%86400000/3600000),
+        m=Math.floor(abs%3600000/60000),s=Math.floor(abs%60000/1000);
+    var from=document.querySelector('.cd-from');
+    if(from)from.textContent=diff<0?'⏳ Đếm ngược đến lễ bế giảng năm học 2025–2026'
+                                   :'📅 Đã trôi qua kể từ ngày bế giảng';
+    function set(el,v){if(el.textContent!==v){el.textContent=v;el.classList.add('tick');setTimeout(function(){el.classList.remove('tick');},200);}}
+    set(elD,pad(d,3));set(elH,pad(h));set(elM,pad(m));set(elS,pad(s));
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* ═══════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════ */
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal,.tl-row,.polaroid').forEach(function(el){obs.observe(el);});
+  document.querySelectorAll('.polaroid').forEach(function(p,i){p.style.transitionDelay=(i*.07)+'s';});
+})();
+setTimeout(function(){
+  document.querySelectorAll('.hero-sub').forEach(function(el){el.style.opacity=1;});
+},2000);
+
+/* ─── POLAROID TILT ─── */
+document.querySelectorAll('.polaroid').forEach(function(card){
+  var rots=[-2.5,1.2,-1,2.1,-.8,1.8];
+  var idx=[].indexOf.call(card.parentNode.children,card);
+  card.addEventListener('mousemove',function(e){
+    var r=card.getBoundingClientRect();
+    var cx=(e.clientX-r.left)/r.width-.5,cy=(e.clientY-r.top)/r.height-.5;
+    card.style.transform='rotate(0deg) scale(1.04) translateY(-6px) perspective(600px) rotateY('+(cx*8)+'deg) rotateX('+(-cy*8)+'deg)';
+  });
+  card.addEventListener('mouseleave',function(){card.style.transform='rotate('+(rots[idx]||0)+'deg)';});
+});
+
+/* ─── LIGHTBOX ─── */
+(function(){
+  var data=[
+    ['\uD83C\uDFEB','C\u1ED5ng tr\u01B0\u1EDDng quen thu\u1ED9c \u2014 N\u01A1i m\u1ED7i s\u00E1ng ch\xFAng ta l\u1EA1i g\u1EB7p nhau'],
+    ['\uD83D\uDCDA','Ti\u1EBFt h\u1ECD nh\u1EDB \u0111\u1EDDi \u2014 C\xF3 l\u1EA7n c\u01B0\u1EDDi th\xEC c\xF3 l\u1EA7n ng\u1EE7 g\u1EADt'],
+    ['\uD83C\uDF71','B\u1EEFa tr\u01B0a b\xEAn nhau \u2014 Chia nhau t\u1EEBng mi\u1EBFng c\u01A1m'],
+    ['\uD83C\uDFAD','Bu\u1ED5i v\u0103n ngh\u1EC7 \u2014 T\u1EADp c\u1EA3 th\xE1ng, di\u1EC5n 5 ph\xFAt, nh\u1EDB c\u1EA3 \u0111\u1EDDi'],
+    ['\uD83C\uDFD5\uFE0F','\u0110\xEAm l\u1EEDa tr\u1EA1i \u2014 L\u1EA7n \u0111\u1EA7u ng\u1EE7 xa nh\xE0, c\xF9ng nhau'],
+    ['\uD83C\uDF93','Ng\xE0y chia tay l\u1EDBp 9 \u2014 Cu\u1ED9n ph\u1EDBm \u0111\u1EB9p nh\u1EA5t c\u1EE7a tu\u1ED5i th\u01A1']
+  ];
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+  document.querySelectorAll('.polaroid').forEach(function(p,i){
+    p.addEventListener('click',function(e){
+      if(e.target.classList.contains('po-dl'))return;
+      lbImg.innerHTML='<span style="font-size:5rem">'+data[i][0]+'</span>';
+      lbCap.textContent=data[i][1];
+      lb.classList.add('open');
+    });
+  });
+  document.getElementById('lbClose').addEventListener('click',function(){lb.classList.remove('open');});
+  lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open');});
+})();
+
+/* ═══════════════════════════════
+   MUSIC PLAYER
+═══════════════════════════════ */
+(function(){
+  var tracks=[
+    {audio:document.getElementById('a1'),name:'🎵 Nhạc kỉ niệm 1'},
+    {audio:document.getElementById('a2'),name:'🎵 Nhạc kỉ niệm 2'},
+  ];
+  var cur=0,playing=false,interacted=false;
+  var mpCard  =document.getElementById('mpCard');
+  var mpPlay  =document.getElementById('mpPlay');
+  var mpPrev  =document.getElementById('mpPrev');
+  var mpNext  =document.getElementById('mpNext');
+  var mpSong  =document.getElementById('mpSong');
+  var mpFill  =document.getElementById('mpFill');
+  var mpVol   =document.getElementById('mpVol');
+  var mpWave  =document.getElementById('mpWave');
+  var mpDotsEl=document.getElementById('mpDots');
+  var mpToggle=document.getElementById('mpToggle');
+  var cardVisible=true;
+  mpCard.style.display='block';
+
+  tracks.forEach(function(_,i){
+    var d=document.createElement('div');
+    d.className='mp-dot-el'+(i===0?' active':'');
+    d.addEventListener('click',function(e){e.stopImmediatePropagation();if(i!==cur)switchTo(i);});
+    mpDotsEl.appendChild(d);
+  });
+
+  function getAudio(){return tracks[cur].audio;}
+  function updateUI(){
+    mpSong.textContent=tracks[cur].name;
+    mpPlay.textContent=playing?'⏸':'▶️';
+    mpWave.classList.toggle('paused',!playing);
+    mpDotsEl.querySelectorAll('.mp-dot-el').forEach(function(d,i){d.classList.toggle('active',i===cur);});
+    tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});
+  }
+  function stopAll(){tracks.forEach(function(t){t.audio.pause();t.audio.currentTime=0;});}
+  function doPlay(){
+    getAudio().play().then(function(){playing=true;interacted=true;updateUI();schedNote();}).catch(function(){});
+  }
+  function switchTo(i){stopAll();cur=i;if(playing)doPlay();else updateUI();}
+
+  window.addEventListener('load',function(){
+    getAudio().play().then(function(){playing=true;interacted=true;updateUI();schedNote();}).catch(function(){updateUI();});
+  });
+  function onFirst(){
+    if(interacted)return;interacted=true;
+    document.removeEventListener('click',onFirst,true);document.removeEventListener('touchstart',onFirst,true);
+    if(!playing)doPlay();
+  }
+  document.addEventListener('click',onFirst,true);document.addEventListener('touchstart',onFirst,true);
+
+  mpToggle.addEventListener('click',function(e){e.stopImmediatePropagation();cardVisible=!cardVisible;mpCard.style.display=cardVisible?'block':'none';});
+  mpPlay.addEventListener('click',function(e){e.stopImmediatePropagation();if(playing){getAudio().pause();playing=false;updateUI();}else doPlay();});
+  mpPrev.addEventListener('click',function(e){e.stopImmediatePropagation();switchTo((cur-1+tracks.length)%tracks.length);});
+  mpNext.addEventListener('click',function(e){e.stopImmediatePropagation();switchTo((cur+1)%tracks.length);});
+  mpVol.addEventListener('input',function(){tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});});
+  tracks.forEach(function(t,i){
+    t.audio.addEventListener('ended',function(){cur=(i+1)%tracks.length;doPlay();});
+    t.audio.addEventListener('timeupdate',function(){if(i===cur&&t.audio.duration)mpFill.style.width=(t.audio.currentTime/t.audio.duration*100)+'%';});
+  });
+  tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});
+
+  function schedNote(){
+    if(!playing)return;
+    var notes=['🎵','🎶','♪','♫'];
+    var n=document.createElement('span');n.className='mp-note';
+    n.textContent=notes[Math.floor(Math.random()*notes.length)];
+    n.style.left=(20+Math.random()*60)+'%';n.style.bottom='105%';
+    mpCard.appendChild(n);setTimeout(function(){n.remove();},2000);
+    if(playing)setTimeout(schedNote,3500+Math.random()*2000);
+  }
+  updateUI();
+})();
+
+/* ═══════════════════════════════
+   LOMO CAMERA
+═══════════════════════════════ */
+(function(){
+  function fillBar(id){
+    var el=document.getElementById(id);if(!el)return;
+    var f=document.createDocumentFragment();
+    for(var i=0;i<100;i++){var h=document.createElement('div');h.className='lomo-hole';f.appendChild(h);}
+    el.appendChild(f);
+  }
+  fillBar('lomoBarTop');fillBar('lomoBarBot');
+
+  var P=[
+    {name:'Gốc',       e:'🌟',rM:1,    gM:1,    bM:1,    rA:0,  gA:0,  bA:0,  sat:0,   br:0,   fade:0,   grain:0,   vig:0,   leak:null},
+    {name:'Lomo LC-A', e:'🔴',rM:1.18, gM:0.84, bM:0.76, rA:6,  gA:-6, bA:-10,sat:.24, br:-8,  fade:.12, grain:.30, vig:.72, leak:[255,70,15,.12]},
+    {name:'Kodak 400', e:'🟡',rM:1.06, gM:1.01, bM:0.87, rA:8,  gA:4,  bA:-4, sat:.10, br:10,  fade:.20, grain:.18, vig:.40, leak:null},
+    {name:'Fuji Velvia',e:'🟢',rM:0.91,gM:1.14, bM:0.93, rA:-4, gA:6,  bA:2,  sat:.40, br:4,   fade:.06, grain:.12, vig:.45, leak:null},
+    {name:'Cross-Pro', e:'💜',rM:1.12, gM:0.81, bM:1.18, rA:6,  gA:-8, bA:10, sat:.28, br:-10, fade:.10, grain:.32, vig:.62, leak:null},
+    {name:'Polaroid',  e:'⬜',rM:1.00, gM:1.02, bM:1.09, rA:2,  gA:2,  bA:8,  sat:-.08,br:14,  fade:.32, grain:.15, vig:.28, leak:null},
+    {name:'Noir 1970', e:'⬛',rM:1,    gM:1,    bM:1,    rA:0,  gA:0,  bA:0,  sat:-1,  br:-12, fade:.08, grain:.50, vig:.78, leak:null},
+    {name:'Cinestill', e:'🟠',rM:1.22, gM:0.87, bM:0.71, rA:10, gA:-4, bA:-10,sat:.20, br:0,   fade:.15, grain:.40, vig:.55, leak:[255,55,8,.10]},
+    {name:'Expired',   e:'🟤',rM:1.04, gM:0.93, bM:0.72, rA:4,  gA:-2, bA:-12,sat:.14, br:-6,  fade:.28, grain:.55, vig:.38, leak:[190,110,0,.08]},
+  ];
+
+  var canvas =document.getElementById('lomoCanvas');
+  var ctx    =canvas.getContext('2d');
+  var capEl  =document.getElementById('lomoCap');
+  var dropEl =document.getElementById('lomoDrop');
+  var fileEl =document.getElementById('lomoFile');
+  var wsEl   =document.getElementById('lomoWs');
+  var stripEl=document.getElementById('lomoStrip');
+  var fgEl   =document.getElementById('lomoFGrid');
+  var dlBtn  =document.getElementById('lomoDl');
+  var rstBtn =document.getElementById('lomoReset');
+
+  var SL={
+    G:{sl:document.getElementById('slG'),vl:document.getElementById('vG')},
+    V:{sl:document.getElementById('slV'),vl:document.getElementById('vV')},
+    F:{sl:document.getElementById('slF'),vl:document.getElementById('vF')},
+    B:{sl:document.getElementById('slB'),vl:document.getElementById('vB')},
+    S:{sl:document.getElementById('slS'),vl:document.getElementById('vS')},
+  };
+
+  var srcImg=null,curP=0,MAX=900;
+
+  P.forEach(function(p,i){
+    var btn=document.createElement('button');
+    btn.className='lomo-fbtn'+(i===0?' on':'');
+    btn.innerHTML='<span>'+p.e+'</span>'+p.name;
+    btn.addEventListener('click',function(){selectPreset(i);});
+    fgEl.appendChild(btn);
+  });
+
+  function selectPreset(i){
+    curP=i;
+    fgEl.querySelectorAll('.lomo-fbtn').forEach(function(b,j){b.classList.toggle('on',j===i);});
+    stripEl.querySelectorAll('.lomo-sitem').forEach(function(s,j){s.classList.toggle('on',j===i);});
+    var p=P[i];
+    setSL('G',Math.round(p.grain*100));setSL('V',Math.round(p.vig*100));
+    setSL('F',Math.round(p.fade*100));setSL('B',p.br);setSL('S',Math.round(p.sat*100));
+    render();
+  }
+  function setSL(k,v){SL[k].sl.value=v;SL[k].vl.textContent=v;}
+  function getSL(k){return parseFloat(SL[k].sl.value);}
+
+  Object.keys(SL).forEach(function(k){
+    SL[k].sl.addEventListener('input',function(){SL[k].vl.textContent=SL[k].sl.value;render();});
+  });
+  capEl.addEventListener('input',render);
+
+  dropEl.addEventListener('click',function(){fileEl.click();});
+  fileEl.addEventListener('change',function(e){if(e.target.files[0])lomoLoad(e.target.files[0]);});
+  dropEl.addEventListener('dragover',function(e){e.preventDefault();dropEl.classList.add('over');});
+  dropEl.addEventListener('dragleave',function(){dropEl.classList.remove('over');});
+  dropEl.addEventListener('drop',function(e){
+    e.preventDefault();dropEl.classList.remove('over');
+    var f=e.dataTransfer.files[0];
+    if(f&&f.type.startsWith('image/'))lomoLoad(f);
+  });
+
+  function lomoLoad(file){
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      var img=new Image();
+      img.onload=function(){
+        srcImg=img;
+        var scale=Math.min(1,MAX/Math.max(img.width,img.height));
+        canvas.width=Math.round(img.width*scale);
+        canvas.height=Math.round(img.height*scale);
+        dropEl.style.display='none';
+        wsEl.classList.add('on');
+        buildStrip();selectPreset(0);
+      };
+      img.onerror=function(){alert('Không đọc được ảnh, thử file khác!');};
+      img.src=ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function render(){
+    if(!srcImg)return;
+    var W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);ctx.drawImage(srcImg,0,0,W,H);
+    var p=P[curP];
+    var grain=getSL('G')/100,vig=getSL('V')/100,fade=getSL('F')/100,
+        bright=getSL('B'),sat=getSL('S')/100;
+    var id=ctx.getImageData(0,0,W,H),d=id.data;
+    for(var i=0;i<d.length;i+=4){
+      var r=d[i]*p.rM+p.rA+bright;
+      var g=d[i+1]*p.gM+p.gA+bright;
+      var b=d[i+2]*p.bM+p.bA+bright;
+      if(sat!==0){var lum=0.299*r+0.587*g+0.114*b;r=lum+(r-lum)*(1+sat);g=lum+(g-lum)*(1+sat);b=lum+(b-lum)*(1+sat);}
+      if(fade>0){var lift=fade*42;r+=lift*(1-r/255);g+=lift*(1-g/255);b+=lift*(1-b/255);}
+      if(grain>0){var noise=(Math.random()-.5)*grain*75;r+=noise;g+=noise;b+=noise;}
+      d[i]=r<0?0:r>255?255:r;d[i+1]=g<0?0:g>255?255:g;d[i+2]=b<0?0:b>255?255:b;
+    }
+    ctx.putImageData(id,0,0);
+    if(vig>0){
+      var cx=W/2,cy=H/2,outerR=Math.sqrt(cx*cx+cy*cy)*1.12,innerR=outerR*(1-vig*0.62);
+      var vg=ctx.createRadialGradient(cx,cy,innerR<0?0:innerR,cx,cy,outerR);
+      vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,'+Math.min(0.92,vig*0.9)+')');
+      ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+    }
+    if(p.leak){
+      var lr=p.leak[0],lg=p.leak[1],lb2=p.leak[2],la=p.leak[3];
+      var lkG=ctx.createRadialGradient(0,0,0,0,0,W*0.55);
+      lkG.addColorStop(0,'rgba('+lr+','+lg+','+lb2+','+la+')');
+      lkG.addColorStop(1,'rgba('+lr+','+lg+','+lb2+',0)');
+      ctx.fillStyle=lkG;ctx.fillRect(0,0,W,H);
+    }
+    var cap=capEl.value.trim();
+    if(cap){
+      var fs=Math.max(14,Math.round(W*0.043));
+      ctx.fillStyle='rgba(0,0,0,0.48)';ctx.fillRect(0,H-fs*2.3,W,fs*2.3);
+      ctx.fillStyle='rgba(254,249,240,0.8)';ctx.font=fs+'px Caveat, cursive';
+      ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(cap,W/2,H-fs*1.1);
+    }
+  }
+
+  function buildStrip(){
+    stripEl.innerHTML='';
+    var TH=60,TW=Math.round(TH*(canvas.width/canvas.height));
+    P.forEach(function(p,i){
+      var tc=document.createElement('canvas');tc.width=TW;tc.height=TH;
+      var tx=tc.getContext('2d');tx.drawImage(srcImg,0,0,TW,TH);
+      var id2=tx.getImageData(0,0,TW,TH),d2=id2.data;
+      for(var j=0;j<d2.length;j+=4){
+        var r=d2[j]*p.rM+p.rA+p.br,g=d2[j+1]*p.gM+p.gA+p.br,b=d2[j+2]*p.bM+p.bA+p.br;
+        if(p.sat!==0){var lum=0.299*r+0.587*g+0.114*b;r=lum+(r-lum)*(1+p.sat);g=lum+(g-lum)*(1+p.sat);b=lum+(b-lum)*(1+p.sat);}
+        if(p.fade>0){var lift=p.fade*42;r+=lift*(1-r/255);g+=lift*(1-g/255);b+=lift*(1-b/255);}
+        d2[j]=r<0?0:r>255?255:r;d2[j+1]=g<0?0:g>255?255:g;d2[j+2]=b<0?0:b>255?255:b;
+      }
+      tx.putImageData(id2,0,0);
+      if(p.vig>0){
+        var cx2=TW/2,cy2=TH/2,outerR2=Math.sqrt(cx2*cx2+cy2*cy2)*1.12,innerR2=outerR2*(1-p.vig*.62);
+        var vg2=tx.createRadialGradient(cx2,cy2,innerR2<0?0:innerR2,cx2,cy2,outerR2);
+        vg2.addColorStop(0,'rgba(0,0,0,0)');vg2.addColorStop(1,'rgba(0,0,0,'+Math.min(.92,p.vig*.9)+')');
+        tx.fillStyle=vg2;tx.fillRect(0,0,TW,TH);
+      }
+      var item=document.createElement('div');item.className='lomo-sitem'+(i===0?' on':'');
+      item.appendChild(tc);
+      var lbl=document.createElement('span');lbl.className='lomo-sname';lbl.textContent=p.e+' '+p.name;
+      item.appendChild(lbl);
+      item.addEventListener('click',(function(idx){return function(){selectPreset(idx);};})(i));
+      stripEl.appendChild(item);
+    });
+  }
+
+  dlBtn.addEventListener('click',function(){
+    render();
+    var a=document.createElement('a');
+    var fname=(capEl.value.trim()||'lomo-ky-niem')+'-'+P[curP].name;
+    a.download=fname.replace(/\s+/g,'-')+'.jpg';
+    a.href=canvas.toDataURL('image/jpeg',0.93);
+    a.click();
+  });
+
+  rstBtn.addEventListener('click',function(){
+    srcImg=null;wsEl.classList.remove('on');dropEl.style.display='';
+    fileEl.value='';capEl.value='';stripEl.innerHTML='';
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+  });
+
+})(); /* end LOMO */
 </script>
 </body>
 </html>
-
