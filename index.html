@@ -181,7 +181,7 @@ footer{background:var(--paper-warm);border-top:2px dashed rgba(44,31,20,.1);padd
 .loader-tip{font-family:'Caveat',cursive;font-size:.9rem;color:var(--muted);font-style:italic}
 
 /* HAMBURGER */
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;z-index:101;position:relative}
 .hamburger span{display:block;width:22px;height:2px;background:var(--coral);border-radius:2px;transition:all .3s;transform-origin:center}
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
@@ -505,6 +505,17 @@ footer{background:var(--paper-warm);border-top:2px dashed rgba(44,31,20,.1);padd
   </div>
 </section>
 
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lb">
+  <span class="lb-close" id="lbClose">✕ Đóng lại</span>
+  <div class="lb-card">
+    <div class="lb-img" id="lbImg"></div>
+    <div style="height:4px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep),var(--sage));margin:0 -1.5rem"></div>
+    <p class="lb-cap" id="lbCap"></p>
+  </div>
+</div>
+
 <footer>
   <span class="footer-doodle">Cấp 2 — Mãi Mãi Trong Tim ✏️</span>
   <p class="footer-text">Lớp 9 &nbsp;·&nbsp; 2025 – 2026 &nbsp;·&nbsp; Chúng ta đã có một tuổi thơ thật đẹp</p>
@@ -561,12 +572,14 @@ window.addEventListener('scroll',function(){
 ═══════════════════════════════ */
 var hamburger=document.getElementById('hamburger');
 var mobileMenu=document.getElementById('mobileMenu');
-hamburger.addEventListener('click',function(){
-  hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');
+hamburger.addEventListener('click',function(e){
+  e.stopPropagation();
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
 });
 function closeMobileMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');}
 document.addEventListener('click',function(e){
-  if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMobileMenu();
+  if(mobileMenu.classList.contains('open')&&!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMobileMenu();
 });
 
 /* ═══════════════════════════════
@@ -787,428 +800,6 @@ function downloadPolaroid(btn){
     }
   }
 }
-
-/* ═══════════════════════════════
-   MUSIC PLAYER
-═══════════════════════════════ */
-(function(){
-  var tracks=[
-    {audio:document.getElementById('a1'),name:'🎵 Nhạc kỉ niệm 1'},
-    {audio:document.getElementById('a2'),name:'🎵 Nhạc kỉ niệm 2'},
-  ];
-  var cur=0,playing=false,interacted=false;
-  var mpCard  =document.getElementById('mpCard');
-  var mpPlay  =document.getElementById('mpPlay');
-  var mpPrev  =document.getElementById('mpPrev');
-  var mpNext  =document.getElementById('mpNext');
-  var mpSong  =document.getElementById('mpSong');
-  var mpFill  =document.getElementById('mpFill');
-  var mpVol   =document.getElementById('mpVol');
-  var mpWave  =document.getElementById('mpWave');
-  var mpDotsEl=document.getElementById('mpDots');
-  var mpToggle=document.getElementById('mpToggle');
-  var cardVisible=true;
-  mpCard.style.display='block';
-
-  tracks.forEach(function(_,i){
-    var d=document.createElement('div');
-    d.className='mp-dot-el'+(i===0?' active':'');
-    d.addEventListener('click',function(e){e.stopImmediatePropagation();if(i!==cur)switchTo(i);});
-    mpDotsEl.appendChild(d);
-  });
-
-  function getAudio(){return tracks[cur].audio;}
-  function updateUI(){
-    mpSong.textContent=tracks[cur].name;
-    mpPlay.textContent=playing?'⏸':'▶️';
-    mpWave.classList.toggle('paused',!playing);
-    mpDotsEl.querySelectorAll('.mp-dot-el').forEach(function(d,i){d.classList.toggle('active',i===cur);});
-    tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});
-  }
-  function stopAll(){tracks.forEach(function(t){t.audio.pause();t.audio.currentTime=0;});}
-  function doPlay(){
-    getAudio().play().then(function(){playing=true;interacted=true;updateUI();schedNote();}).catch(function(){});
-  }
-  function switchTo(i){stopAll();cur=i;if(playing)doPlay();else updateUI();}
-
-  window.addEventListener('load',function(){
-    getAudio().play().then(function(){playing=true;interacted=true;updateUI();schedNote();}).catch(function(){updateUI();});
-  });
-  function onFirst(){
-    if(interacted)return;interacted=true;
-    document.removeEventListener('click',onFirst,true);document.removeEventListener('touchstart',onFirst,true);
-    if(!playing)doPlay();
-  }
-  document.addEventListener('click',onFirst,true);document.addEventListener('touchstart',onFirst,true);
-
-  mpToggle.addEventListener('click',function(e){e.stopImmediatePropagation();cardVisible=!cardVisible;mpCard.style.display=cardVisible?'block':'none';});
-  mpPlay.addEventListener('click',function(e){e.stopImmediatePropagation();if(playing){getAudio().pause();playing=false;updateUI();}else doPlay();});
-  mpPrev.addEventListener('click',function(e){e.stopImmediatePropagation();switchTo((cur-1+tracks.length)%tracks.length);});
-  mpNext.addEventListener('click',function(e){e.stopImmediatePropagation();switchTo((cur+1)%tracks.length);});
-  mpVol.addEventListener('input',function(){tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});});
-  tracks.forEach(function(t,i){
-    t.audio.addEventListener('ended',function(){cur=(i+1)%tracks.length;doPlay();});
-    t.audio.addEventListener('timeupdate',function(){if(i===cur&&t.audio.duration)mpFill.style.width=(t.audio.currentTime/t.audio.duration*100)+'%';});
-  });
-  tracks.forEach(function(t){t.audio.volume=parseFloat(mpVol.value);});
-
-  function schedNote(){
-    if(!playing)return;
-    var notes=['🎵','🎶','♪','♫'];
-    var n=document.createElement('span');n.className='mp-note';
-    n.textContent=notes[Math.floor(Math.random()*notes.length)];
-    n.style.left=(20+Math.random()*60)+'%';n.style.bottom='105%';
-    mpCard.appendChild(n);setTimeout(function(){n.remove();},2000);
-    if(playing)setTimeout(schedNote,3500+Math.random()*2000);
-  }
-  updateUI();
-})();
-
-/* ═══════════════════════════════
-   LOMO CAMERA
-═══════════════════════════════ */
-(function(){
-  function fillBar(id){
-    var el=document.getElementById(id);if(!el)return;
-    var f=document.createDocumentFragment();
-    for(var i=0;i<100;i++){var h=document.createElement('div');h.className='lomo-hole';f.appendChild(h);}
-    el.appendChild(f);
-  }
-  fillBar('lomoBarTop');fillBar('lomoBarBot');
-
-  var P=[
-    {name:'Gốc',       e:'🌟',rM:1,    gM:1,    bM:1,    rA:0,  gA:0,  bA:0,  sat:0,   br:0,   fade:0,   grain:0,   vig:0,   leak:null},
-    {name:'Lomo LC-A', e:'🔴',rM:1.18, gM:0.84, bM:0.76, rA:6,  gA:-6, bA:-10,sat:.24, br:-8,  fade:.12, grain:.30, vig:.72, leak:[255,70,15,.12]},
-    {name:'Kodak 400', e:'🟡',rM:1.06, gM:1.01, bM:0.87, rA:8,  gA:4,  bA:-4, sat:.10, br:10,  fade:.20, grain:.18, vig:.40, leak:null},
-    {name:'Fuji Velvia',e:'🟢',rM:0.91,gM:1.14, bM:0.93, rA:-4, gA:6,  bA:2,  sat:.40, br:4,   fade:.06, grain:.12, vig:.45, leak:null},
-    {name:'Cross-Pro', e:'💜',rM:1.12, gM:0.81, bM:1.18, rA:6,  gA:-8, bA:10, sat:.28, br:-10, fade:.10, grain:.32, vig:.62, leak:null},
-    {name:'Polaroid',  e:'⬜',rM:1.00, gM:1.02, bM:1.09, rA:2,  gA:2,  bA:8,  sat:-.08,br:14,  fade:.32, grain:.15, vig:.28, leak:null},
-    {name:'Noir 1970', e:'⬛',rM:1,    gM:1,    bM:1,    rA:0,  gA:0,  bA:0,  sat:-1,  br:-12, fade:.08, grain:.50, vig:.78, leak:null},
-    {name:'Cinestill', e:'🟠',rM:1.22, gM:0.87, bM:0.71, rA:10, gA:-4, bA:-10,sat:.20, br:0,   fade:.15, grain:.40, vig:.55, leak:[255,55,8,.10]},
-    {name:'Expired',   e:'🟤',rM:1.04, gM:0.93, bM:0.72, rA:4,  gA:-2, bA:-12,sat:.14, br:-6,  fade:.28, grain:.55, vig:.38, leak:[190,110,0,.08]},
-  ];
-
-  var canvas =document.getElementById('lomoCanvas');
-  var ctx    =canvas.getContext('2d');
-  var capEl  =document.getElementById('lomoCap');
-  var dropEl =document.getElementById('lomoDrop');
-  var fileEl =document.getElementById('lomoFile');
-  var wsEl   =document.getElementById('lomoWs');
-  var stripEl=document.getElementById('lomoStrip');
-  var fgEl   =document.getElementById('lomoFGrid');
-  var dlBtn  =document.getElementById('lomoDl');
-  var rstBtn =document.getElementById('lomoReset');
-
-  var SL={
-    G:{sl:document.getElementById('slG'),vl:document.getElementById('vG')},
-    V:{sl:document.getElementById('slV'),vl:document.getElementById('vV')},
-    F:{sl:document.getElementById('slF'),vl:document.getElementById('vF')},
-    B:{sl:document.getElementById('slB'),vl:document.getElementById('vB')},
-    S:{sl:document.getElementById('slS'),vl:document.getElementById('vS')},
-  };
-
-  var srcImg=null,curP=0,MAX=900;
-
-  P.forEach(function(p,i){
-    var btn=document.createElement('button');
-    btn.className='lomo-fbtn'+(i===0?' on':'');
-    btn.innerHTML='<span>'+p.e+'</span>'+p.name;
-    btn.addEventListener('click',function(){selectPreset(i);});
-    fgEl.appendChild(btn);
-  });
-
-  function selectPreset(i){
-    curP=i;
-    fgEl.querySelectorAll('.lomo-fbtn').forEach(function(b,j){b.classList.toggle('on',j===i);});
-    stripEl.querySelectorAll('.lomo-sitem').forEach(function(s,j){s.classList.toggle('on',j===i);});
-    var p=P[i];
-    setSL('G',Math.round(p.grain*100));setSL('V',Math.round(p.vig*100));
-    setSL('F',Math.round(p.fade*100));setSL('B',p.br);setSL('S',Math.round(p.sat*100));
-    render();
-  }
-  function setSL(k,v){SL[k].sl.value=v;SL[k].vl.textContent=v;}
-  function getSL(k){return parseFloat(SL[k].sl.value);}
-
-  Object.keys(SL).forEach(function(k){
-    SL[k].sl.addEventListener('input',function(){SL[k].vl.textContent=SL[k].sl.value;render();});
-  });
-  capEl.addEventListener('input',render);
-
-  dropEl.addEventListener('click',function(){fileEl.click();});
-  fileEl.addEventListener('change',function(e){if(e.target.files[0])lomoLoad(e.target.files[0]);});
-  dropEl.addEventListener('dragover',function(e){e.preventDefault();dropEl.classList.add('over');});
-  dropEl.addEventListener('dragleave',function(){dropEl.classList.remove('over');});
-  dropEl.addEventListener('drop',function(e){
-    e.preventDefault();dropEl.classList.remove('over');
-    var f=e.dataTransfer.files[0];
-    if(f&&f.type.startsWith('image/'))lomoLoad(f);
-  });
-
-  function lomoLoad(file){
-    var reader=new FileReader();
-    reader.onload=function(ev){
-      var img=new Image();
-      img.onload=function(){
-        srcImg=img;
-        var scale=Math.min(1,MAX/Math.max(img.width,img.height));
-        canvas.width=Math.round(img.width*scale);
-        canvas.height=Math.round(img.height*scale);
-        dropEl.style.display='none';
-        wsEl.classList.add('on');
-        buildStrip();selectPreset(0);
-      };
-      img.onerror=function(){alert('Không đọc được ảnh, thử file khác!');};
-      img.src=ev.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function render(){
-    if(!srcImg)return;
-    var W=canvas.width,H=canvas.height;
-    ctx.clearRect(0,0,W,H);ctx.drawImage(srcImg,0,0,W,H);
-    var p=P[curP];
-    var grain=getSL('G')/100,vig=getSL('V')/100,fade=getSL('F')/100,
-        bright=getSL('B'),sat=getSL('S')/100;
-    var id=ctx.getImageData(0,0,W,H),d=id.data;
-    for(var i=0;i<d.length;i+=4){
-      var r=d[i]*p.rM+p.rA+bright;
-      var g=d[i+1]*p.gM+p.gA+bright;
-      var b=d[i+2]*p.bM+p.bA+bright;
-      if(sat!==0){var lum=0.299*r+0.587*g+0.114*b;r=lum+(r-lum)*(1+sat);g=lum+(g-lum)*(1+sat);b=lum+(b-lum)*(1+sat);}
-      if(fade>0){var lift=fade*42;r+=lift*(1-r/255);g+=lift*(1-g/255);b+=lift*(1-b/255);}
-      if(grain>0){var noise=(Math.random()-.5)*grain*75;r+=noise;g+=noise;b+=noise;}
-      d[i]=r<0?0:r>255?255:r;d[i+1]=g<0?0:g>255?255:g;d[i+2]=b<0?0:b>255?255:b;
-    }
-    ctx.putImageData(id,0,0);
-    if(vig>0){
-      var cx=W/2,cy=H/2,outerR=Math.sqrt(cx*cx+cy*cy)*1.12,innerR=outerR*(1-vig*0.62);
-      var vg=ctx.createRadialGradient(cx,cy,innerR<0?0:innerR,cx,cy,outerR);
-      vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,'+Math.min(0.92,vig*0.9)+')');
-      ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
-    }
-    if(p.leak){
-      var lr=p.leak[0],lg=p.leak[1],lb2=p.leak[2],la=p.leak[3];
-      var lkG=ctx.createRadialGradient(0,0,0,0,0,W*0.55);
-      lkG.addColorStop(0,'rgba('+lr+','+lg+','+lb2+','+la+')');
-      lkG.addColorStop(1,'rgba('+lr+','+lg+','+lb2+',0)');
-      ctx.fillStyle=lkG;ctx.fillRect(0,0,W,H);
-    }
-    var cap=capEl.value.trim();
-    if(cap){
-      var fs=Math.max(14,Math.round(W*0.043));
-      ctx.fillStyle='rgba(0,0,0,0.48)';ctx.fillRect(0,H-fs*2.3,W,fs*2.3);
-      ctx.fillStyle='rgba(254,249,240,0.8)';ctx.font=fs+'px Caveat, cursive';
-      ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(cap,W/2,H-fs*1.1);
-    }
-  }
-
-  function buildStrip(){
-    stripEl.innerHTML='';
-    var TH=60,TW=Math.round(TH*(canvas.width/canvas.height));
-    P.forEach(function(p,i){
-      var tc=document.createElement('canvas');tc.width=TW;tc.height=TH;
-      var tx=tc.getContext('2d');tx.drawImage(srcImg,0,0,TW,TH);
-      var id2=tx.getImageData(0,0,TW,TH),d2=id2.data;
-      for(var j=0;j<d2.length;j+=4){
-        var r=d2[j]*p.rM+p.rA+p.br,g=d2[j+1]*p.gM+p.gA+p.br,b=d2[j+2]*p.bM+p.bA+p.br;
-        if(p.sat!==0){var lum=0.299*r+0.587*g+0.114*b;r=lum+(r-lum)*(1+p.sat);g=lum+(g-lum)*(1+p.sat);b=lum+(b-lum)*(1+p.sat);}
-        if(p.fade>0){var lift=p.fade*42;r+=lift*(1-r/255);g+=lift*(1-g/255);b+=lift*(1-b/255);}
-        d2[j]=r<0?0:r>255?255:r;d2[j+1]=g<0?0:g>255?255:g;d2[j+2]=b<0?0:b>255?255:b;
-      }
-      tx.putImageData(id2,0,0);
-      if(p.vig>0){
-        var cx2=TW/2,cy2=TH/2,outerR2=Math.sqrt(cx2*cx2+cy2*cy2)*1.12,innerR2=outerR2*(1-p.vig*.62);
-        var vg2=tx.createRadialGradient(cx2,cy2,innerR2<0?0:innerR2,cx2,cy2,outerR2);
-        vg2.addColorStop(0,'rgba(0,0,0,0)');vg2.addColorStop(1,'rgba(0,0,0,'+Math.min(.92,p.vig*.9)+')');
-        tx.fillStyle=vg2;tx.fillRect(0,0,TW,TH);
-      }
-      var item=document.createElement('div');item.className='lomo-sitem'+(i===0?' on':'');
-      item.appendChild(tc);
-      var lbl=document.createElement('span');lbl.className='lomo-sname';lbl.textContent=p.e+' '+p.name;
-      item.appendChild(lbl);
-      item.addEventListener('click',(function(idx){return function(){selectPreset(idx);};})(i));
-      stripEl.appendChild(item);
-    });
-  }
-
-  dlBtn.addEventListener('click',function(){
-    render();
-    var a=document.createElement('a');
-    var fname=(capEl.value.trim()||'lomo-ky-niem')+'-'+P[curP].name;
-    a.download=fname.replace(/\s+/g,'-')+'.jpg';
-    a.href=canvas.toDataURL('image/jpeg',0.93);
-    a.click();
-  });
-
-  rstBtn.addEventListener('click',function(){
-    srcImg=null;wsEl.classList.remove('on');dropEl.style.display='';
-    fileEl.value='';capEl.value='';stripEl.innerHTML='';
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-  });
-
-})(); /* end LOMO */
-</script>
-</body>
-</html><!-- LIGHTBOX -->
-<div class="lightbox" id="lb">
-  <span class="lb-close" id="lbClose">✕ Đóng lại</span>
-  <div class="lb-card">
-    <div class="lb-img" id="lbImg"></div>
-    <div style="height:4px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--sky-deep),var(--sage));margin:0 -1.5rem"></div>
-    <p class="lb-cap" id="lbCap"></p>
-  </div>
-</div>
-
-<footer>
-  <span class="footer-doodle">Cấp 2 — Mãi Mãi Trong Tim ✏️</span>
-  <p class="footer-text">Lớp 9 &nbsp;·&nbsp; 2025 – 2026 &nbsp;·&nbsp; Chúng ta đã có một tuổi thơ thật đẹp</p>
-  <span class="footer-hearts">🌻 ⭐ 💛 ⭐ 🌻</span>
-</footer>
-
-<script>
-'use strict';
-
-/* ═══════════════════════════════
-   CURSOR
-═══════════════════════════════ */
-(function(){
-  var cur=document.querySelector('.cursor');
-  if(!cur)return;
-  var tip=cur.querySelector('.c-tip'),trl=cur.querySelector('.c-trail');
-  var mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
-  (function loop(){
-    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-    tip.style.cssText='left:'+mx+'px;top:'+my+'px';
-    trl.style.cssText='left:'+rx+'px;top:'+ry+'px';
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a,.polaroid,.cd-card,.tl-body,button').forEach(function(el){
-    el.addEventListener('mouseenter',function(){trl.style.width='44px';trl.style.height='44px';trl.style.borderColor='rgba(232,133,106,.6)';});
-    el.addEventListener('mouseleave',function(){trl.style.width='32px';trl.style.height='32px';trl.style.borderColor='rgba(232,133,106,.35)';});
-  });
-})();
-
-/* ═══════════════════════════════
-   LOADER
-═══════════════════════════════ */
-(function(){
-  var loader=document.getElementById('loader'),bar=document.getElementById('loaderBar'),p=0;
-  var iv=setInterval(function(){
-    p+=Math.random()*18+5;if(p>=100)p=100;
-    bar.style.width=p+'%';
-    if(p>=100){clearInterval(iv);setTimeout(function(){loader.classList.add('hide');},300);}
-  },80);
-})();
-
-/* ═══════════════════════════════
-   PROGRESS BAR
-═══════════════════════════════ */
-window.addEventListener('scroll',function(){
-  var pb=document.getElementById('progress-bar');
-  var tot=document.documentElement.scrollHeight-window.innerHeight;
-  pb.style.width=(tot>0?(window.scrollY/tot*100):0)+'%';
-});
-
-/* ═══════════════════════════════
-   HAMBURGER
-═══════════════════════════════ */
-var hamburger=document.getElementById('hamburger');
-var mobileMenu=document.getElementById('mobileMenu');
-hamburger.addEventListener('click',function(){
-  hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');
-});
-function closeMobileMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');}
-document.addEventListener('click',function(e){
-  if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMobileMenu();
-});
-
-/* ═══════════════════════════════
-   MARQUEE
-═══════════════════════════════ */
-(function(){
-  var words=['Lớp 9 ✏️','Năm Cuối Cấp 2','Chia Tay Mái Trường','Kỉ Niệm Không Phai',
-             'Class of 2025 🎓','Tuổi Học Trò','Giờ Ra Chơi','Sân Trường Quen',
-             'Nhớ Mãi Bạn Bè','Cảm Ơn Thầy Cô'];
-  var mq=document.getElementById('mq'),h='';
-  for(var r=0;r<3;r++)words.forEach(function(w){
-    h+='<span class="marquee-item">'+w+'<span class="mq-dot"></span></span>';
-  });
-  mq.innerHTML=h;
-})();
-
-/* ═══════════════════════════════
-   COUNTDOWN
-═══════════════════════════════ */
-(function(){
-  var gradDay=new Date('2026-05-31T08:00:00');
-  var elD=document.getElementById('cd-d'),elH=document.getElementById('cd-h'),
-      elM=document.getElementById('cd-m'),elS=document.getElementById('cd-s');
-  function pad(n,l){return String(Math.abs(n)).padStart(l||2,'0');}
-  function tick(){
-    var diff=Date.now()-gradDay.getTime();
-    var abs=Math.abs(diff);
-    var d=Math.floor(abs/86400000),h=Math.floor(abs%86400000/3600000),
-        m=Math.floor(abs%3600000/60000),s=Math.floor(abs%60000/1000);
-    var from=document.querySelector('.cd-from');
-    if(from)from.textContent=diff<0?'⏳ Đếm ngược đến lễ bế giảng năm học 2025–2026'
-                                   :'📅 Đã trôi qua kể từ ngày bế giảng';
-    function set(el,v){if(el.textContent!==v){el.textContent=v;el.classList.add('tick');setTimeout(function(){el.classList.remove('tick');},200);}}
-    set(elD,pad(d,3));set(elH,pad(h));set(elM,pad(m));set(elS,pad(s));
-  }
-  tick();setInterval(tick,1000);
-})();
-
-/* ═══════════════════════════════
-   SCROLL REVEAL
-═══════════════════════════════ */
-(function(){
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
-  },{threshold:.1});
-  document.querySelectorAll('.reveal,.tl-row,.polaroid').forEach(function(el){obs.observe(el);});
-  document.querySelectorAll('.polaroid').forEach(function(p,i){p.style.transitionDelay=(i*.07)+'s';});
-})();
-setTimeout(function(){
-  document.querySelectorAll('.hero-sub').forEach(function(el){el.style.opacity=1;});
-},2000);
-
-/* ─── POLAROID TILT ─── */
-document.querySelectorAll('.polaroid').forEach(function(card){
-  var rots=[-2.5,1.2,-1,2.1,-.8,1.8];
-  var idx=[].indexOf.call(card.parentNode.children,card);
-  card.addEventListener('mousemove',function(e){
-    var r=card.getBoundingClientRect();
-    var cx=(e.clientX-r.left)/r.width-.5,cy=(e.clientY-r.top)/r.height-.5;
-    card.style.transform='rotate(0deg) scale(1.04) translateY(-6px) perspective(600px) rotateY('+(cx*8)+'deg) rotateX('+(-cy*8)+'deg)';
-  });
-  card.addEventListener('mouseleave',function(){card.style.transform='rotate('+(rots[idx]||0)+'deg)';});
-});
-
-/* ─── LIGHTBOX ─── */
-(function(){
-  var data=[
-    ['\uD83C\uDFEB','C\u1ED5ng tr\u01B0\u1EDDng quen thu\u1ED9c \u2014 N\u01A1i m\u1ED7i s\u00E1ng ch\xFAng ta l\u1EA1i g\u1EB7p nhau'],
-    ['\uD83D\uDCDA','Ti\u1EBFt h\u1ECD nh\u1EDB \u0111\u1EDDi \u2014 C\xF3 l\u1EA7n c\u01B0\u1EDDi th\xEC c\xF3 l\u1EA7n ng\u1EE7 g\u1EADt'],
-    ['\uD83C\uDF71','B\u1EEFa tr\u01B0a b\xEAn nhau \u2014 Chia nhau t\u1EEBng mi\u1EBFng c\u01A1m'],
-    ['\uD83C\uDFAD','Bu\u1ED5i v\u0103n ngh\u1EC7 \u2014 T\u1EADp c\u1EA3 th\xE1ng, di\u1EC5n 5 ph\xFAt, nh\u1EDB c\u1EA3 \u0111\u1EDDi'],
-    ['\uD83C\uDFD5\uFE0F','\u0110\xEAm l\u1EEDa tr\u1EA1i \u2014 L\u1EA7n \u0111\u1EA7u ng\u1EE7 xa nh\xE0, c\xF9ng nhau'],
-    ['\uD83C\uDF93','Ng\xE0y chia tay l\u1EDBp 9 \u2014 Cu\u1ED9n ph\u1EDBm \u0111\u1EB9p nh\u1EA5t c\u1EE7a tu\u1ED5i th\u01A1']
-  ];
-  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
-  document.querySelectorAll('.polaroid').forEach(function(p,i){
-    p.addEventListener('click',function(e){
-      if(e.target.classList.contains('po-dl'))return;
-      lbImg.innerHTML='<span style="font-size:5rem">'+data[i][0]+'</span>';
-      lbCap.textContent=data[i][1];
-      lb.classList.add('open');
-    });
-  });
-  document.getElementById('lbClose').addEventListener('click',function(){lb.classList.remove('open');});
-  lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open');});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open');});
-})();
 
 /* ═══════════════════════════════
    MUSIC PLAYER
